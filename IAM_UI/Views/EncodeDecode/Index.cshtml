@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Encode Decode Form";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="text-center my-4">Encode and Decode Form</h2>
+
+<div class="container">
+    <form id="encodeDecodeForm" class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label for="inputText" class="form-label">Enter Text:</label>
+            <input type="text" id="inputText" name="inputText" class="form-control" required />
+        </div>
+        <div class="mb-3 text-center">
+            <button type="button" class="btn btn-primary me-2" onclick="encodeDecodeText(1)">Encode</button>
+            <button type="button" class="btn btn-secondary" onclick="encodeDecodeText(2)">Decode</button>
+        </div>
+        <div class="mb-3">
+            <label for="result" class="form-label">Result:</label>
+            <input type="text" id="result" class="form-control" readonly />
+        </div>
+    </form>
+</div>
+
+<script>
+      async function encodeDecodeText(type) {
+        let inputText = document.getElementById("inputText").value;
+
+        try {
+            let response = await fetch('/EncodeDecode/EncryptDecrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ Txt: inputText, Type: type })
+            });
+
+            if (!response.ok) {
+                let errorText = await response.text();
+                console.error("Error:", errorText);
+                document.getElementById("result").value = "Error: " + errorText;
+                return;
+            }
+
+            let resultText = await response.text();
+            document.getElementById("result").value = resultText;
+        } catch (error) {
+            console.error("Fetch error:", error);
+            document.getElementById("result").value = "Request failed.";
+        }
+    }
+
+
+  
+
+    
+</script>

@@ -1,0 +1,448 @@
+﻿/* Apply a full-page background image */
+body {
+    background: url('/Loginasset/images/robo6.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* Glassmorphism effect for modal */
+.modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    position: relative;
+}
+
+/* Center the modal title */
+.modal-header {
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Custom positioning for the modal */
+.modal-dialog {
+    position: relative;
+    max-width: 40%;
+    padding-bottom:45px
+}
+
+/* Style the select element */
+.form-select {
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1rem;
+}
+
+
+
+/* Style the close button */
+.btn-close {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+    .btn-close:hover {
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem 0;
+}
+
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-select-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .custom-select-trigger:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+.custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    margin-top: 5px;
+    display: none;
+    flex-direction: column;
+    z-index: 99;
+}
+
+.custom-option {
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    .custom-option:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+.custom-select.open .custom-options {
+    display: flex;
+}
+
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    transition: transform 0.3s ease;
+}
+
+.custom-select.open .arrow {
+    transform: rotate(-180deg);
+}
+
+
+
+.app-row {
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.card {
+    width: 180px; /* Reduced width */
+    height: 190px; /* Reduced height */
+    background: rgba(220, 233, 255, 0.22);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Ensure individual stacking */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    transition: all 0.3s ease-out;
+    text-decoration: none;
+    z-index: 1; /* Ensure normal stacking order */
+    left: 0px;
+}
+    .card:not(:first-child) {
+        margin-left: -50px;
+    }
+
+/* Apply transformations only to the hovered card */
+    .card:hover {
+        transform: translateY(-20px);
+        box-shadow: 0 10px 40px rgba(255, 182, 193, 0.4); /* Soft glowing effect */
+        z-index: 10; /* Bring hovered card to front */
+    }
+
+        .card:hover ~ .card {
+            position: relative;
+            left: 50px;
+            transition: 0.4s ease-out;
+        }
+
+        .card:hover .overlay {
+            transform: scale(6) translateZ(0);
+        }
+
+        .card:hover .circle {
+            border-color: var(--bg-color-light);
+            background: var(--bg-color);
+        }
+
+            .card:hover .circle:after {
+                background: var(--bg-color-light);
+            }
+
+        .card:hover p {
+            color: var(--text-color-hover);
+        }
+
+    .card:active {
+        transform: scale(1) translateZ(0);
+        box-shadow: 0 15px 24px rgba(0,0,0,0.11), 0 15px 24px var(--box-shadow-color);
+    }
+
+    .card p {
+        font-family: "Poppins", sans-serif; /* Modern and clean font */
+        font-size: 15px;
+        font-weight: 500;
+        color: #ffffffcc; /* Softer white for readability */
+        margin-top: 12px;
+        text-align: center;
+        letter-spacing: 0.5px; /* Subtle spacing for a sleek look */
+        text-transform: capitalize; /* Makes text look more polished */
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Adds a modern depth effect */
+        z-index: 1000;
+        transition: color 0.3s ease-out, transform 0.2s ease-out;
+    }
+
+    /* Subtle scale effect on hover */
+    .card:hover p {
+        color: #fff; /* Brighter on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+
+.circle:after {
+    content: "";
+    width: 86px;
+    height: 86px;
+    display: block;
+    position: absolute;
+    background: var(--bg-color);
+    border-radius: 50%;
+    transition: opacity 0.3s ease-out;
+}
+
+.circle {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.39);
+    border: 3px solid var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease-out;
+}
+
+    .circle i {
+        font-size: 17px;
+        padding-bottom: 5px;
+        margin-top: 13px;
+        z-index: 1000;
+        color: rgba(255, 255, 255, 0.769);
+        font-size: 2.5rem;
+        transition: color 0.3s ease-out;
+    }
+
+/* Change icon color on hover */
+.card:hover .circle i {
+    color: var(--bg-color);
+}
+
+.overlay {
+    width: 65px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 65px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    top: 15%;
+    left: 24%;
+    z-index: 1;
+    transition: transform 0.3s ease-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+@keyframes sparkles {
+    0%, 20% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+        box-shadow: 0px -30px 0px -5px rgba(255, 255, 255, 0.9), 18px -18px 0px -5px rgba(0, 255, 255, 0.9), 30px 0px 0px -5px rgba(0, 255, 127, 0.9), 18px 18px 0px -5px rgba(255, 215, 0, 0.9), 0px 30px 0px -5px rgba(255, 69, 0, 0.9), -18px 18px 0px -5px rgba(255, 0, 127, 0.9), -30px 0px 0px -5px rgba(173, 216, 230, 0.9), -18px -18px 0px -5px rgba(0, 191, 255, 0.9);
+        transform: scale(1.1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.3);
+        box-shadow: 0px -40px 0px -5px rgba(255, 255, 255, 0.7), 24px -24px 0px -5px rgba(0, 255, 255, 0.7), 40px 0px 0px -5px rgba(0, 255, 127, 0.7), 24px 24px 0px -5px rgba(255, 215, 0, 0.7), 0px 40px 0px -5px rgba(255, 69, 0, 0.7), -24px 24px 0px -5px rgba(255, 0, 127, 0.7), -40px 0px 0px -5px rgba(173, 216, 230, 0.7), -24px -24px 0px -5px rgba(0, 191, 255, 0.7);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(2);
+        box-shadow: none;
+    }
+}
+
+.sparkle-effect {
+    animation: sparkles 1.5s ease-out forwards;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    pointer-events: none
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* From Uiverse.io by Donewenfu */
+.loader {
+    position: fixed; /* Covers the whole screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    z-index: 9999; /* Ensures it's above all elements */
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.jimu-primary-loading:before,
+.jimu-primary-loading:after {
+    position: absolute;
+    top: 0;
+    content: '';
+}
+
+.jimu-primary-loading:before {
+    left: -19.992px;
+}
+
+.jimu-primary-loading:after {
+    left: 19.992px;
+    -webkit-animation-delay: 0.32s !important;
+    animation-delay: 0.32s !important;
+}
+
+.jimu-primary-loading:before,
+.jimu-primary-loading:after,
+.jimu-primary-loading {
+    background: #333333;
+    -webkit-animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+    animation: loading-keys-app-loading 0.8s infinite ease-in-out;
+    width: 13.6px;
+    height: 32px;
+}
+
+.jimu-primary-loading {
+    text-indent: -9999em;
+    margin: auto;
+    position: absolute;
+    right: calc(50% - 6.8px);
+    top: calc(50% - 16px);
+    -webkit-animation-delay: 0.16s !important;
+    animation-delay: 0.16s !important;
+}
+
+@-webkit-keyframes loading-keys-app-loading {
+
+    0%, 80%, 100% {
+        opacity: .75;
+        box-shadow: 0 0 #333333;
+        height: 32px;
+    }
+
+    40% {
+        opacity: 1;
+        box-shadow: 0 -8px  #333333;
+        height: 40px;
+    }
+}
+
+@keyframes loading-keys-app-loading {
+
+    0%, 80%, 100% {
+        opacity: .75;
+        box-shadow: 0 0 #333333;
+        height: 32px;
+    }
+
+    40% {
+        opacity: 1;
+        box-shadow: 0 -8px #333333;
+        height: 40px;
+    }
+}

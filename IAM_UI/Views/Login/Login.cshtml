@@ -1,0 +1,217 @@
+﻿@model IAM_UI.Models.LoginModel
+@{
+
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Loginasset/images/login.ico">
+
+    <!-- Bootstrap css -->
+    <link href="/Loginasset/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="/Loginasset/css/app.css" rel="stylesheet" type="text/css" id="app-style" />
+    <!-- icons -->
+    <link href="/Loginasset/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Additional CSS styles -->
+    <link href="/Loginasset/css/Style.css" rel="stylesheet" type="text/css" />
+
+    <!-- Head js -->
+    <script src="/Loginasset/js/head.js"></script>
+
+    <title>Login</title>
+    <style>
+        /* Custom CAPTCHA styles */
+        .captcha-element {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+            .captcha-element:hover {
+                background-color: #e0e0e0;
+            }
+    </style>
+</head>
+<body class="authentication-bg authentication-bg-pattern">
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-4">
+                    <div class="card bg-pattern">
+                        <div class="card-body p-4">
+                            <div class="text-center w-75 m-auto">
+                                <div class="auth-logo">
+                                    <a href="" class="logo logo-dark text-center">
+                                        <span class="logo-lg">
+                                            <img src="Loginasset/images/login.png" alt="" height="35">
+                                        </span>
+                                    </a>
+                                    <a href="" class="logo logo-light text-center">
+                                        <span class="logo-lg">
+                                            <img src="Loginasset/images/logo-light.png" alt="" height="22">
+                                        </span>
+                                    </a>
+                                </div>
+                                <p class="text-muted mb-4 mt-3">
+                                    <h1 style="font-family: ui-monospace">LogIn</h1>
+                                </p>
+                            </div>
+
+                            <form asp-action="Login" method="post" id="User_Login">
+                                <input type="hidden" id="captchaCodeElementAnswer" name="captchaCodeElementAnswer" />
+
+                                <!-- Username Input -->
+                                <div class="mb-3">
+                                    <label for="emailaddress" class="form-label">Username</label>
+                                    <div class="text-center d-grid">
+                                        <input asp-for="Username" class="form-control me-md-2" type="text"
+                                               placeholder="Enter your Username" />
+                                    </div>
+                                </div>
+
+                                <!-- Password Input -->
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input asp-for="Password" type="password" class="form-control" maxlength="20"
+                                               placeholder="Enter your password" />
+                                        <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CAPTCHA Section -->
+                                <div class="mb-3">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-12 text-center">
+                                            <label for="captchaInput" class="control-label">
+                                                Enter CAPTCHA code:
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-12 text-center" id="divcaptcha">
+                                            <span class="captcha-element mb-1" id="captchaCodeElement"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-10 offset-sm-1 text-center">
+                                            <input type="text" id="captchaInput" name="captchaInput"
+                                                   class="form-control border border-secondary" required
+                                                   title="Please enter a valid CAPTCHA code">
+                                            <span class="text-danger">
+                                                <span id="captchaInput-error" class="field-validation-valid"
+                                                      data-valmsg-for="captchaInput" data-valmsg-replace="true"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Error Message -->
+                                <div class="text-center">
+                                    <p class="text-muted mb-4 mt-3">
+                                         
+                                            <label class="text-danger" id="message">@TempData["ErrorMsg"]</label>
+                                         
+                                    </p>
+                                </div>
+                                <input type="hidden" name="redirectUrl" value="@ViewBag.RedirectUrl" />
+                                <!-- Submit Button -->
+                                <div class="text-center d-grid">
+                                    <button class="btn btn-primary me-md-2" type="submit"
+                                            style="background-color: #4dc4ff; border-color: #4dc4ff;">
+                                        Log In
+                                    </button>
+                                </div>
+                                <!-- Forgot Password Link -->
+                                <div class="text-center d-grid">
+                                    <a class="forgetPwd" asp-controller="ChangePasswordUI" asp-action="ForgetPassword" target="_blank">Forgot Password?</a>
+
+
+                                </div>
+                            </form>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </div> <!-- end account-pages -->
+    <!-- Vendor js -->
+    <script src="/Loginasset/js/vendor.min.js"></script>
+    <!-- App js -->
+    <script src="/Loginasset/js/app.min.js"></script> 
+    <!-- Scripts Section -->
+    
+        <script>
+            $(document).ready(function () {
+                DisplayCaptcha();
+
+                $('#User_Login').submit(function (event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    if ($("#captchaInput").val().trim() != $('#captchaCodeElementAnswer').val().trim()) {
+                        ShowCaptchaError("Wrong CAPTCHA! Please try again.");
+                        DisplayCaptcha(); // Regenerate CAPTCHA on incorrect input
+                        return;
+                    }
+                    ClearCaptchaError();
+                    // If captcha is valid, submit the form
+                    this.submit();
+                });
+            });
+
+
+            // Function to generate a random CAPTCHA Code.
+            function DisplayCaptcha() {
+                var captcha = GenerateCaptcha();
+                $('#captchaCodeElement').text(captcha.expression);
+                //console.log('Generated CAPTCHA:', captcha.expression); // Log generated CAPTCHA expression
+                $('#captchaCodeElementAnswer').val(captcha.answer);
+                //console.log('Expected Answer:', captcha.answer); // Log expected CAPTCHA answer
+            }
+
+            // Function to generate CAPTCHA
+            function GenerateCaptcha() {
+                var num1 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+                var num2 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+                var operator = ['+', '-', '*'][Math.floor(Math.random() * 3)]; // Random arithmetic operator.
+
+                var expression = num1 + " " + operator + " " + num2;
+                var answer = eval(expression); // Evaluate the expression to get the answer
+                //console.log('Generated Expression:', expression); // Log generated expression
+                //console.log('Generated Answer:', answer); // Log generated answer
+
+                return { expression: expression, answer: answer };
+            }
+            // Function to display an error message in the CAPTCHA error span
+            function ShowCaptchaError(message) {
+                $('#captchaInput-error').text(message).show(); // Set the error message and make it visible
+            }
+
+            // Function to clear the CAPTCHA error message
+            function ClearCaptchaError() {
+                $('#captchaInput-error').text('').hide(); // Clear and hide the error message
+            }
+        </script>
+     
+</body>
+</html>

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/21/2025 18:21:31" ReportInfo.Modified="01/25/2025 13:06:43" ReportInfo.CreatorVersion="2024.2.0.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="TBl_EmployeeInfoReport" ReferenceName="TBl_EmployeeInfo_ref" DataType="System.Int32" Enabled="true">
+      <Column Name="TenantId" DataType="System.Int32"/>
+      <Column Name="ApplicationId" DataType="System.Int32"/>
+      <Column Name="UsersForBillingId" DataType="System.Int32"/>
+      <Column Name="Date" DataType="System.DateTime"/>
+      <Column Name="Month" DataType="System.Int32"/>
+      <Column Name="MonthName" DataType="System.String"/>
+      <Column Name="Year" DataType="System.Int32"/>
+      <Column Name="CompanyId" DataType="System.Int32"/>
+      <Column Name="COMPANY_NAME" DataType="System.String"/>
+      <Column Name="ApplicationUserRateId" DataType="System.Int32"/>
+      <Column Name="Rate" DataType="System.Int32"/>
+      <Column Name="ADDRESS" DataType="System.String"/>
+      <Column Name="GST_NO" DataType="System.String"/>
+      <Column Name="PAN_NO" DataType="System.String"/>
+      <Column Name="CIN_NO" DataType="System.String"/>
+      <Column Name="MOBILE" DataType="System.String"/>
+      <Column Name="PHONENO" DataType="System.String"/>
+      <Column Name="Mast_State_Key" DataType="System.Int32"/>
+      <Column Name="StateName" DataType="System.String"/>
+      <Column Name="SAC_Code" DataType="System.Int32"/>
+      <Column Name="ActiveEmployee" DataType="System.Int32"/>
+      <Column Name="ResignedEmployee" DataType="System.Int32"/>
+      <Column Name="TotalEmployee" DataType="System.Int32"/>
+      <Column Name="EmployeeValue" DataType="System.Int32"/>
+      <Column Name="CGST" DataType="System.Int32"/>
+      <Column Name="SGST" DataType="System.Int32"/>
+      <Column Name="IGST" DataType="System.Int32"/>
+      <Column Name="Amount" DataType="System.Int32"/>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="132.3">
+      <ShapeObject Name="Shape1" Left="18.9" Top="18.9" Width="708.75" Height="103.95" Border.Color="DarkGray" Fill.Color="DarkGray"/>
+      <ShapeObject Name="Shape2" Left="9.45" Top="9.45" Width="708.75" Height="103.95" Border.Color="Gainsboro" Fill.Color="Gainsboro"/>
+      <TextObject Name="Text1" Left="28.35" Top="18.9" Width="652.05" Height="28.35" Border.Color="Gainsboro" Text="TEKNOWLEDGE ANALYTIC SERVICES PVT. LTD." HorzAlign="Center" Font="Calisto MT, 14pt, style=Bold"/>
+      <TextObject Name="Text2" Left="141.75" Top="47.25" Width="396.9" Height="18.9" Border.Color="Gainsboro" Fill.Color="Gainsboro" Text="P28, KASBA INDUSTRIAL ESTATE, PHASE III" HorzAlign="Center" Font="Calibri, 9pt, style=Bold"/>
+      <TextObject Name="Text51" Left="141.75" Top="66.15" Width="264.6" Height="18.9" Text="E-mail : swapan.maity@technoconservices.com" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text52" Left="406.35" Top="66.15" Width="170.1" Height="18.9" Text="Phone : 9874245577" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text53" Left="103.95" Top="85.05" Width="141.75" Height="18.9" Text="PAN No : AABCM6981E" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text54" Left="264.6" Top="85.05" Width="179.55" Height="18.9" Text="CIN : U74900WB1987PTC042234" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text55" Left="463.05" Top="85.05" Width="179.55" Height="18.9" Text="GSTIN No : 19AABCM6981E1Z8" VertAlign="Center" Font="Arial, 8pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="136.3" Width="718.2" Height="652.05" DataSource="TBl_EmployeeInfoReport">
+      <TextObject Name="Text33" Left="103.95" Top="9.45" Width="510.3" Height="18.9" Border.Color="LightGray" Text="SAAS BILLING INFORMATION FOR THE MONTH OF  [TBl_EmployeeInfoReport.MonthName]" VertAlign="Center" Font="Calibri, 14pt, style=Bold, Underline"/>
+      <TableObject Name="Table1" Left="9.45" Top="330.75" Width="699.3" Height="122.85" Border.Lines="All">
+        <TableColumn Name="Column1" Width="28.35"/>
+        <TableColumn Name="Column16" Width="47.25"/>
+        <TableColumn Name="Column17" Width="75.6"/>
+        <TableColumn Name="Column2" Width="47.25"/>
+        <TableColumn Name="Column3"/>
+        <TableColumn Name="Column4"/>
+        <TableColumn Name="Column6"/>
+        <TableColumn Name="Column7" Width="37.8"/>
+        <TableColumn Name="Column8"/>
+        <TableColumn Name="Column9" Width="47.25"/>
+        <TableColumn Name="Column10" Width="47.25"/>
+        <TableColumn Name="Column11" Width="37.8"/>
+        <TableColumn Name="Column5"/>
+        <TableRow Name="Row1" Height="37.8">
+          <TableCell Name="Cell1" Border.Lines="All" Text="Sl. No." HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell40" Border.Lines="All" Text="Code" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell42" Border.Lines="All" Text="Description" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="SAC Code" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="Active Employee" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell4" Border.Lines="All" Text="Resigned Employee" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell11" Text="Total Employee" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell13" Border.Lines="All" Text="Rate" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell15" Border.Lines="All" Text="Employee Value" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell17" Border.Lines="All" Text="SGST" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell19" Border.Lines="All" Text="CGST" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell21" Border.Lines="All" Text="IGST" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="Amount" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="66.15">
+          <TableCell Name="Cell6" Border.Lines="All" Text="1" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell41" Border.Lines="All" Text="HRMS.SAAS.MOD.00" Font="Arial, 7pt"/>
+          <TableCell Name="Cell43" Border.Lines="All" Text="Charges For HRMS-SAAS MODEL" Font="Arial, 7pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Text="[TBl_EmployeeInfoReport.SAC_Code]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell8" Border.Lines="All" Text="[TBl_EmployeeInfoReport.ActiveEmployee]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell9" Border.Lines="All" Text="[TBl_EmployeeInfoReport.ResignedEmployee]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell12" Border.Lines="All" Text="[TBl_EmployeeInfoReport.TotalEmployee]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell14" Border.Lines="All" Text="[TBl_EmployeeInfoReport.Rate]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell16" Border.Lines="All" Text="[TBl_EmployeeInfoReport.EmployeeValue]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell18" Border.Lines="All" Text="[TBl_EmployeeInfoReport.SGST]" Font="Arial, 7pt"/>
+          <TableCell Name="Cell20" Border.Lines="All" Text="[TBl_EmployeeInfoReport.CGST]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell22" Border.Lines="All" Text="[TBl_EmployeeInfoReport.IGST]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell10" Border.Lines="All" Text="[TBl_EmployeeInfoReport.Amount]" HorzAlign="Center" Font="Arial, 7pt"/>
+        </TableRow>
+        <TableRow Name="Row7">
+          <TableCell Name="Cell44" Font="Arial, 10pt"/>
+          <TableCell Name="Cell45" Font="Arial, 10pt"/>
+          <TableCell Name="Cell46" Text="Round Off (+)" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell47" Font="Arial, 10pt"/>
+          <TableCell Name="Cell48" Font="Arial, 10pt"/>
+          <TableCell Name="Cell49" Font="Arial, 10pt"/>
+          <TableCell Name="Cell50" Font="Arial, 10pt"/>
+          <TableCell Name="Cell51" Font="Arial, 10pt"/>
+          <TableCell Name="Cell52" Font="Arial, 10pt"/>
+          <TableCell Name="Cell53" Font="Arial, 10pt"/>
+          <TableCell Name="Cell54" Font="Arial, 10pt"/>
+          <TableCell Name="Cell55" Border.Lines="Right" Font="Arial, 10pt"/>
+          <TableCell Name="Cell56" Text="0.40" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        </TableRow>
+      </TableObject>
+      <TableObject Name="Table2" Left="283.5" Top="463.05" Width="419.58" Height="66.15" Border.Lines="All">
+        <TableColumn Name="Column12" Width="130.41"/>
+        <TableColumn Name="Column13" Width="158.76"/>
+        <TableColumn Name="Column15" Width="130.41"/>
+        <TableRow Name="Row4" Height="22.05">
+          <TableCell Name="Cell28" Border.Lines="All" Text="GST Rate" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell29" Border.Lines="All" Text="Employee Value" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell31" Border.Lines="All" Text="Tax" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row6" Height="22.05">
+          <TableCell Name="Cell37" Border.Lines="All" Text="CGST" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell38" Border.Lines="All" Text="[TBl_EmployeeInfoReport.EmployeeValue]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell39" Border.Lines="All" Text="[TBl_EmployeeInfoReport.CGST]" HorzAlign="Center" Font="Arial, 7pt"/>
+        </TableRow>
+        <TableRow Name="Row5" Height="22.05">
+          <TableCell Name="Cell33" Border.Lines="All" Text="SGST" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell34" Border.Lines="All" Text="[TBl_EmployeeInfoReport.EmployeeValue]" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell36" Text="[TBl_EmployeeInfoReport.SGST]" HorzAlign="Center" Font="Arial, 7pt"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text34" Left="9.45" Top="463.05" Width="85.05" Height="18.9" Text="Remarks :   " Font="Arial, 10pt"/>
+      <TextObject Name="Text35" Left="94.5" Top="463.05" Width="189" Height="56.7" Text="SAAS BILLING information for employees on the 1st day of [TBl_EmployeeInfoReport.MonthName]   [TBl_EmployeeInfoReport.Year] is provided in this report." Font="Arial, 8pt"/>
+      <TextObject Name="Text36" Left="9.45" Top="557.55" Width="274.05" Height="37.8" Text="Whether Tax is Payable Under reverse charge - No" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text37" Left="302.4" Top="538.65" Width="368.55" Height="18.9" Text="Round off :  " Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text39" Left="302.4" Top="557.55" Width="66.15" Height="37.8" Text="Rupees : " Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text44" Left="368.55" Top="557.55" Width="330.75" Height="37.8" Border.Color="DarkGray" Text="[ToWordsIn([TBl_EmployeeInfoReport.Amount])]" Editable="true" Font="Arial, 8pt"/>
+      <TextObject Name="Text45" Left="368.55" Top="538.65" Width="330.75" Height="18.9" Border.Color="DarkGray" Fill.Color="White" Text=" Month Of  [TBl_EmployeeInfoReport.MonthName]" Font="Arial, 8pt"/>
+      <TextObject Name="Text56" Left="9.45" Top="47.25" Width="94.5" Height="28.35" Text="Invoice No : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text57" Left="9.45" Top="75.6" Width="94.5" Height="28.35" Text="Invoice Date : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text58" Left="9.45" Top="103.95" Width="94.5" Height="28.35" Text="P.O No : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text59" Left="9.45" Top="132.3" Width="94.5" Height="18.9" Text="P.O Date : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text60" Left="103.95" Top="47.25" Width="245.7" Height="18.9" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text61" Left="103.95" Top="75.6" Width="245.7" Height="18.9" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text62" Left="103.95" Top="132.3" Width="245.7" Height="18.9" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text63" Left="103.95" Top="103.95" Width="245.7" Height="18.9" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text64" Left="368.55" Top="47.25" Width="141.75" Height="28.35" Text="Transportation Mode : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text65" Left="368.55" Top="75.6" Width="94.5" Height="28.35" Text="Vehicle No : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text66" Left="368.55" Top="103.95" Width="113.4" Height="28.35" Text="Place of Supply : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text67" Left="368.55" Top="132.3" Width="151.2" Height="18.9" Text="Date &amp; Time of Supply : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text68" Left="519.75" Top="132.3" Width="189" Height="18.9" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text69" Left="463.05" Top="75.6" Width="245.7" Height="18.9" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text70" Left="510.3" Top="47.25" Width="198.45" Height="18.9" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text72" Left="9.45" Top="160.65" Width="340.2" Height="18.9" Text="Bill To : Name &amp; Address" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text73" Left="368.55" Top="160.65" Width="340.2" Height="18.9" Text="Shipped To : Name &amp; Address" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text74" Left="9.45" Top="189" Width="340.2" Height="18.9" Text="[TBl_EmployeeInfoReport.COMPANY_NAME]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text75" Left="368.55" Top="217.35" Width="340.2" Height="18.9" Text="[TBl_EmployeeInfoReport.ADDRESS]" Font="Arial, 9pt"/>
+      <TextObject Name="Text78" Left="9.45" Top="245.7" Width="132.3" Height="18.9" Text="State &amp; State Code : " VertAlign="Bottom" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text79" Left="132.3" Top="245.7" Width="217.35" Height="18.9" Text="[TBl_EmployeeInfoReport.StateName] / [TBl_EmployeeInfoReport.Mast_State_Key]" VertAlign="Bottom" Font="Arial, 9pt"/>
+      <TextObject Name="Text82" Left="9.45" Top="274.05" Width="75.6" Height="18.9" Text="GSTIN NO :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text84" Left="9.45" Top="302.4" Width="66.15" Height="18.9" Text="PAN NO : " VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text88" Left="85.05" Top="274.05" Width="264.6" Height="18.9" Text="[TBl_EmployeeInfoReport.GST_NO]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text89" Left="75.6" Top="302.4" Width="274.05" Height="18.9" Text="[TBl_EmployeeInfoReport.PAN_NO]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text90" Left="368.55" Top="245.7" Width="132.3" Height="18.9" Text="State &amp; State Code : " VertAlign="Bottom" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text91" Left="491.4" Top="245.7" Width="217.35" Height="18.9" Text="[TBl_EmployeeInfoReport.StateName] / [TBl_EmployeeInfoReport.Mast_State_Key]" VertAlign="Bottom" Font="Arial, 9pt"/>
+      <TextObject Name="Text92" Left="368.55" Top="274.05" Width="75.6" Height="18.9" Text="GSTIN NO :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text94" Left="444.15" Top="274.05" Width="264.6" Height="18.9" Text="[TBl_EmployeeInfoReport.GST_NO]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text93" Left="368.55" Top="302.4" Width="66.15" Height="18.9" Text="PAN NO : " VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text95" Left="425.25" Top="302.4" Width="283.5" Height="18.9" Text="[TBl_EmployeeInfoReport.PAN_NO]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text96" Left="368.55" Top="189" Width="340.2" Height="18.9" Text="[TBl_EmployeeInfoReport.COMPANY_NAME]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text97" Left="9.45" Top="217.35" Width="340.2" Height="18.9" Text="[TBl_EmployeeInfoReport.ADDRESS]" Font="Arial, 9pt"/>
+      <TextObject Name="Text98" Left="481.95" Top="103.95" Width="226.8" Height="28.35" Text="[TBl_EmployeeInfoReport.StateName] / [TBl_EmployeeInfoReport.Mast_State_Key]" Font="Arial, 9pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="792.35" Width="718.2" Height="81.05">
+      <ShapeObject Name="Shape9" Left="9.45" Top="18.9" Width="699.3" Height="56.7" Border.Color="Gainsboro" Border.Width="3"/>
+      <ShapeObject Name="Shape8" Left="9.45" Width="699.3" Height="37.8" Border.Color="LightGray" Fill.Color="Gainsboro"/>
+      <TextObject Name="Text30" Left="947.1" Top="9.45" Width="94.5" Height="18.9" Border.Color="Transparent" Text="[PageN]" HorzAlign="Right" VertAlign="Center" Font="Arial, 7pt"/>
+      <TextObject Name="Text49" Left="255.15" Top="52.7" Width="151.2" Height="18.9" Border.Color="Gainsboro" Text="Subject to Kolkata Jurisdiction" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text48" Left="9.45" Top="33.8" Width="699.3" Height="18.9" Border.Color="Gainsboro" Text="H.O.: P-28, KASBA INDUSTRIAL ESTATE, PHASE III, KOLKATA - 700 107, PHONE : 2442 0074" HorzAlign="Center" VertAlign="Bottom" Font="Arial, 7pt, style=Bold"/>
+      <TextObject Name="Text47" Left="189" Top="5.45" Width="340.2" Height="28.35" Border.Color="Transparent" Fill.Color="Silver" CanGrow="true" Text="Supported by TEKNOWLEDGE ANALYTIC SERVICES PVT. LTD." HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt, style=Bold"/>
+      <TextObject Name="Text46" Left="10.45" Top="5.45" Width="113.4" Height="28.35" Border.Color="Transparent" Text="[Date]" VertAlign="Center" Font="Arial, 7pt"/>
+      <TextObject Name="Text50" Left="614.25" Width="94.5" Height="37.8" Text="[PageN]" HorzAlign="Right" VertAlign="Center" Font="Arial, 7pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

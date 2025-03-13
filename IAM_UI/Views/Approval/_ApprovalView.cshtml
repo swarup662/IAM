@@ -1,0 +1,596 @@
+﻿@model IAM_UI.Models.ApprovalModel;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "_ApprovalView";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+  
+}
+
+<style>
+
+    #Names input[type=text] {
+        /*width: 94%;*/
+        box-sizing: border-box;
+        border: 2px solid #ff6a00;
+        border-radius: 4px;
+        font-size: 25px;
+        background-color: white;
+        background-image: url('~/assets/images/clear.png');
+        background-position: 8px 13px;
+        background-repeat: no-repeat;
+        padding: 22px 28px 25px 46px;
+    }
+
+    #ui-id-1 {
+        z-index: 9999;
+    }
+</style>
+<div id="smartwizard">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#lbl1">
+                <strong>Module Define</strong>
+                <br>Approval SetUp Lavel One
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#lbl2">
+                <strong>User Lavel</strong>
+                <br>Approval SetUp Lavel Two
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#lbl3">
+                <strong>Employee Details</strong>
+                <br>Approval SetUp Lavel Three
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+
+
+        <div id="lbl1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                            <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                                <div class="navbar-brand mb-0"><h4>Approval Step One</h4> </div>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><span>Dasboard</span></li>
+                                        <li class="breadcrumb-item"><span>Approval</span></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Step One</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-xl-10 mx-auto">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body">
+                            <form id="_APR_S1" class="needs-validation" novalidate>
+                            @* <form id="_lbl1" asp-action="SaveApprovalSetupLabelOne" asp-controller="Approval" method="post"> *@
+                                <input type="hidden" asp-for="Approval_level_One_key" />
+                                <input type="hidden" asp-for="Approval_level_two_key" />
+                                <input type="hidden" asp-for="Approval_level_three_key" />
+                                <input type="hidden" asp-for="employee_master_key" />
+                                <div class="row mb-0" style=" overflow-y: auto; max-height: 400px;">
+
+                                    <div class="row mb-3 ">
+
+                                        <div class="col-md-4">
+                                            <label for="Application_Name_Id" class="form-label">
+                                                Application Name<sup style="color:red">*</sup>
+                                            </label>
+
+                                           @*  <label for="inputZip" class="form-label">Application Name<sup style="color:red">*</sup>:</label> *@
+
+                                        
+                                            <select asp-for="Application_Name_Id" class="form-select" asp-items="@ViewBag.ApplicationNameList" required>
+                                                <option value="">Select an option</option>
+                                            </select>
+                              
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="Application_Main_Menu_Id" class="form-label">
+                                                Main Menu<sup style="color:red">*</sup>
+                                            </label>
+                                   
+                                            <select asp-for="Application_Main_Menu_Id" class="form-select" required>
+                                            </select>
+                                          
+                                        </div>
+                                   
+                                        <div class="col-md-4">
+                                            <label for="Application_Module_Id" class="form-label">
+                                                Module<sup style="color:red">*</sup>
+                                            </label>
+
+                                      
+                                            <select asp-for="Application_Module_Id" class="form-select" required>
+                                            </select>
+                                           @*  @Html.ValidationMessageFor(m => m.ModelId, "", new { @class = "text-danger" }) *@
+                                        </div>
+                                    </div>
+
+                                   @*  <div class="row mb-3 " id="ApprovalSubMenu">
+                                    </div> *@
+                                    <div class="row mb-3 ">
+
+                                        <div class="col-md-3">
+
+                                            <label for="inputZip" class="form-label d-flex justify-content-center align-items-center">Approval Type<sup style="color:red">*</sup>:</label>
+
+                                        </div>
+                                        <div class=" col-md-3">
+                                            <select asp-for="Approval_Type" class="form-select" asp-items="@ViewBag.ApplicationTypelist" required>
+                                                <option value="">Select an option</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="inputZip" class="form-label d-flex justify-content-center align-items-center">Approval PathSetUp<sup style="color:red">*</sup>:</label>
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <input class="check-input" data-val="true" 
+                                                   id="Rdb_Manual" name="Approval_Path_setup" type="radio" value="1">
+                                            <label class="form-label">Mannual</label>
+                                            <input class="check-input" id="Rdb_Auto" name="Approval_Path_setup" type="radio" value="2" checked>
+                                            <label class="form-label">Auto</label>
+ 
+                                        </div>
+
+                                    </div>
+                                    <div class="row mb-3">
+                                        <!-- Left side: Approver Choose and Opr Mode -->
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <!-- Approver Choose -->
+                                               <div class="row mb-3">
+                                                    
+                                                   <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                                        <label for="inputZip" class="form-label">Approver Choose<sup style="color:red">*</sup>:</label>
+                                                    </div>
+
+
+                                                    <div class="col-md-6">
+                                                        <input class="check-input" data-val="true" id="Rdb_Yes" name="Approval_choose" type="radio" value="1" checked>
+                                                        <label class="form-label me-3">Yes</label>
+                                                        <input class="check-input" id="Rdb_No" name="Approval_choose" type="radio" value="2">
+                                                        <label class="form-label">No</label>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Opr Mode -->
+                                                <div class="row mb-3">
+                                                   
+                                                    <div class="col-md-4 ">
+                                                        <label for="inputZip" class="form-label">Operational Mode<sup style="color:red">*</sup>:</label>
+                                                    </div>
+
+                                                  
+                                                    <div class="col-md-8">
+                                                        <select asp-for="OprMode_Id" class="form-select" asp-items="@ViewBag.OprModeList" required>
+                                                            <option value="">Select an option</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Right side: Company -->
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="inputZip" class="form-label">Company<sup style="color:red">*</sup>:</label>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div id="CompanyContainer" style="overflow-y:auto;max-height:200px;">
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div>
+                                    <div class="mb-3 col-md-12" style="display: flex; justify-content: right;">
+                                        <button type="button" id="SaveApproval_Lavel1" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lbl2" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                            <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                                <div class="navbar-brand mb-0"><h4>Approval Step Two</h4> </div>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><span>Dasboard</span></li>
+                                        <li class="breadcrumb-item"><span>Approval</span></li>
+                                        <li class="breadcrumb-item"><span> Step One</span></li>
+                                        <li class="breadcrumb-item active" aria-current="page"> Step Two</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="st2">
+
+                <div class="col-xl-10 mx-auto">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body">
+                            <form id="_lbl2">
+                                <input type="hidden" asp-for="Approval_level_One_key" />
+                                <input type="hidden" asp-for="Approval_level_two_key" />
+                                <input type="hidden" asp-for="Approval_level_three_key" />
+                                <div class="row mb-0" style=" overflow-y: auto; max-height: 400px;">
+                                    <div class="table-responsive">
+
+                                        <table id="example" class="table table-striped table-bordered" style="width:70%;">
+                                            <thead style="text-align:center;">
+                                                <tr>
+
+                                                    <th>#</th>
+                                                    <th>UserType</th>
+                                                    <th>Action</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="data-contact-person">
+                                                    <th>1</th>
+                                                    <td>
+
+                                                        <select asp-for="UserType_key" class="form-select form01" asp-items="@ViewBag.user" id="Usertype">
+                                                            <option>Select an Option</option>
+                                                        </select>
+
+                                                    </td>
+
+
+                                                    <td>
+                                                        <button type="button" id="btnAdd" class="btn btn-info classAdd"><i class="bx bxs-plus-circle"> Add More UserType</i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table id="example2" class="table table-striped table-bordered" style="width:70%;text-align:center;">
+                                            <thead class="table-primary">
+                                                <tr>
+                                                    @*  <th>Sl.</th>*@
+
+                                                    <th>Step Number</th>
+                                                    <th>Employee Type</th>
+                                                    <th>Action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="approvalleveltwo">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-3 col-md-12" style="display: flex; justify-content: right;">
+                                        <button type="button" id="SaveApproval_Lavel2" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="lbl3" class="tab-pane" role="tabpanel" aria-labelledby="step-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                            <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                                <div class="navbar-brand mb-0"><h4>Approval Step Three</h4> </div>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><span>Dasboard</span></li>
+                                        <li class="breadcrumb-item"><span>Approval</span></li>
+                                        <li class="breadcrumb-item"><span> Step One</span></li>
+                                        <li class="breadcrumb-item"><span> Step Two</span></li>
+                                        <li class="breadcrumb-item active" aria-current="page"> Step Three</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="st3">
+                                               
+
+                <div class="col-md-10 mx-auto" style="overflow-y: auto; max-height: 850px;">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body">
+                            <input type="hidden" asp-for="Approval_level_One_key" />
+                            <input type="hidden" asp-for="Approval_level_two_key" />
+                            <input type="hidden" asp-for="employee_master_key" />
+
+                            <div class="row mb-2" id="divCompany">
+
+                                 <div class="col-sm-2"></div>
+                                 <div class="col-sm-2">
+                                     <label for="Selectedcompany" class="form-label">
+                                                    Company<sup style="color:red">*</sup>
+                                     </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-select" id="Selectedcompany" required>
+                                                 <option value="">Select an Option</option>
+                                    </select>
+                                </div>
+
+                             
+                            </div>
+
+                            <div class="row mb-2" id="DataTab">
+
+                                <div class="table-responsive">
+                                    <table id="example11" class="table table-striped table-bordered" style="width:100%;text-align:center;">
+                                        <thead class="table-primary">
+                                            <tr>
+                                                @* <th>Company</th> *@
+                                                <th>Step Number</th>
+                                                <th>Approver Type</th>
+                                                <th>Approver Name</th>
+                                                <th>Action</th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="ApprovalLevelthree">
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                             <div class="row mb-2" id="Datagrid" style="border: 1px solid orange; border-radius: 10px; padding: 10px 0; text-align: center;">
+
+                                <div class="row mb-2">
+
+                                     <div class="table-responsive">
+                                        <table id="GridDtls" class="table table-striped table-bordered" style="width:100%;text-align:center;">
+                                            <thead class="table-primary">
+                                                <tr>
+                                                     <th>Company</th> 
+                                                    <th>Step Number</th>
+                                                    <th>Approver Type</th>
+                                                    <th>Approver Name</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="L3DetailsGrid">
+                                              
+                                              @*   <label for="Selectedcompany" class="form-label">
+                                                    <b><i>Access List</i></b>
+                                                </label> *@
+                                                <label for="Selectedcompany" class="form-label" style="font-weight: bold; font-style:italic; font-size: 1.2rem;">
+                                                   * Existing Approver List *
+                                                </label>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="modal fade" id="EmployeeSaveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog large">
+        <div class="modal-content" style="width:30vw">
+
+            <div class="modal-header border-bottom border-0 border-4 border-info" style="background-color: #85b1b4; ">
+
+                <h5 class="modal-title showCls" id="ModelChieldlavel">Employee For Approval:: [New]</h5>
+
+            </div>
+
+            <div class="modal-body">
+                <div class="row ">
+                </div>
+                <form>
+                    <input type="hidden" asp-for="UserType_key" />
+                    <input type="show" asp-for="employee_master_key" />
+
+
+                    <div class="row">
+
+                        <label>Select Employee</label>
+
+                        <div id="EmployeeList" style=" overflow-y: auto; max-height: 200px;">
+                            <input type="search" class="form-control" id="Usernames" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 mx-auto" overflow-y: auto; max-height: 350px;>
+                            <div class="card border-top border-0 border-4 border-info">
+                                <div class="card-body">
+                                    <div class="col-md-8">
+                                        <label for="inputZip" class="form-label"></label>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table id="example11" class="table table-striped table-bordered" style="width:100%;text-align:center;">
+                                            <thead class="table-primary">
+                                                <tr>
+                                                    <th></th>
+
+                                                    <th>Employee NAME</th>
+                                                    <th>Action</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="ApprovalLevelthreeDETAILS">
+
+                                                <tr>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <div>
+                    <button type="button" id="SaveEmployee" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Save</button>
+                    <a href="javascript:;" id="CloseEmployee" class="btn btn-warning" onclick="closeEmployeeSaveModal()"><i class="mdi mdi-close"></i>&nbsp; Close</a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div> *@
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@section dateStyle
+{
+    <link href="~/assets/plugins/smart-wizard/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+     <style>
+        .ui-autocomplete {
+            position: absolute;
+            cursor: default;
+            z-index: 3000 !important;
+        }
+    </style>
+}
+
+@section dateScript
+{
+    <!-- Plugins -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+    <!-- Additional Plugins -->
+    <script src="~/assets/plugins/smart-wizard/js/jquery.smartWizard.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+}
+
+<script src="~/js/Approval.js"></script>
+
+<script>
+
+    var counter = 2;
+    $(document).on("click", ".classAdd", function () {
+        debugger;
+
+        var rowCount = $('.data-contact-person').length + 1;
+        var contactdiv = '<tr class="data-contact-person">' +
+            '<th>' + counter + '</th>' +
+            '<td><select name="form' + rowCount + '" class="form-select form01 UserType"></select></td>' +
+            '<td>' +
+            '<button type="button" class="btn btn-info classAdd" style="margin-right: 10px;">' +
+            '<i class="bx bxs-plus-circle"> Add More</i></button>' +
+            '<button type="button" class="deleteContact btn btn-danger">' +
+            '<i class="bx bx-trash"> Remove</i></button>' +
+            '</td>' +
+            '</tr>';
+
+        counter++;
+        $('#example').append(contactdiv);
+
+
+        GetUserType(rowCount);
+    });
+    $(document).on("click", ".deleteContact", function () {
+        $(this).closest("tr").remove();
+        counter -= 1;
+    });
+
+
+
+</script>
+
+
+<script>
+
+
+    function capitalizeFirstLetter(input) {
+        input.value = input.value.trim().replace(/^\s*\w/, match => match.toUpperCase());
+    }
+</Script>

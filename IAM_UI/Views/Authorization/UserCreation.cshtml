@@ -1,0 +1,602 @@
+﻿@using IAM_UI.Models;
+@{
+    ViewData["Title"] = "User Creation";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+
+}
+
+
+<style>
+
+    .loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050; /* Ensure it overlays all content */
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .biometric-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border: 4px solid white;
+        color: white;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .biometric-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+    .thumbs-up {
+        background-color: #28a745; /* Bootstrap success color */
+    }
+
+    .thumbs-down {
+        background-color: #dc3545; /* Bootstrap danger color */
+    }
+
+    .badge-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .badge-label {
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+    }
+</style>
+
+<div class="container-fluid ">
+
+    <!-- start page title -->
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                    <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                        <div class="navbar-brand mb-0"><h4>User Creation</h4> </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><span>Dasboard</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item"><span>User</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item active" aria-current="page">User Creation</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style=" box-shadow: 2px 2px 5px Gray">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row mb-2">
+                                <div class="col-sm-4">
+                                    <span class="Add" style="display:none">
+                                        <button type="button" id="AddButton" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-plus-circle me-2"></i> Add Record</button>
+                                    </span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="text-sm-end">
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Import</button>
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Export Pdf</button>
+                                        <button type="button" style="display:none" class="btn btn-blue mb-2 me-1">Export Excel</button>
+                                        <button type="button" style="display:none" id="PrintButton" class="btn btn-primary mb-2 me-1">Print</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" id="RefreshModel"><i class="mdi mdi-cloud-refresh me-2"></i> Refresh</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <div id="email-loader" class="loader-overlay" style="display: none;">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                                <table id="example" class="table table-striped table-bordered" style="width:100% ;text-align:center">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th>Sl No.</th>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email Id</th>
+                                            <th>Gender</th>   
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @{
+                                            int count = 0;
+                                        }
+                                        @foreach (UserCreationModel AC in ViewBag.UserCreation)
+                                        {
+                                            count++;
+                                            <tr>
+                                                <td>@count</td>
+                                                <td>@AC.FullName</td>
+                                                <td style="-webkit-text-fill-color:darkblue">@AC.UserName</td>
+                                                <td>@AC.Email_ID</td>
+                                                <td>@AC.GenderName</td>
+                                                <td>@AC.UserCategoryName</td>
+                                                <td>
+
+                                                    @if (AC.AuthBlock == 2)
+                                                    {
+                                                        <div class="mb-2 bg-body-danger text-center rounded" style="padding: 0;">
+                                                            <i class="bi bi-person-x-fill fs-1 text-danger"></i>
+                                                        </div>
+
+
+                                                    }
+                                                    else if (AC.AuthBlock == 1)
+                                                    {
+                                                        <div class="mb-2 bg-body-danger text-center rounded" style="padding: 0;">
+                                                            <i class="bi bi-person-x-fill fs-1  " style="color:darkgrey"></i>
+                                                        </div>
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="mb-2 bg-body-secondary text-center rounded" style="padding: 0;">
+                                                            <i class="bi bi-person-check-fill fs-1 text-success"></i>
+                                                        </div>
+
+
+                                                    }
+
+                                                </td>
+                                                <td>
+
+                                                    <a href="javascript:;" class="action-icon"><i class="mdi mdi-email-send" onclick="EmailSend(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Send Email" style="color:orange"></i></a>
+                                                    <span class="Edit" style="display:none">
+                                                        <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-square-edit-outline" onclick="EditItem(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Edit" style="color:forestgreen"></i></a>
+                                                    </span>
+
+                                                    <span class="View" style="display:none">
+                                                        <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-eye-circle-outline" onclick="EditItem(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="View" style="color:forestgreen"></i></a>
+                                                    </span>
+                                                    @if (AC.AuthBlock != 1)
+                                                    {
+                                                        <span class="Edit" style="display:none">
+                                                            <a href="javascript:;" class="action-icon" onclick="showBlockModal(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Block User">
+                                                                <i class="bi bi-lock-fill" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                        </span>
+
+                                                    }
+                                                    @if (AC.AuthBlock == 2)
+                                                    {
+                                                        <span class="Edit" style="display:none">
+                                                            <a href="javascript:;" class="action-icon unblock" onclick="UnblockUser(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Unblock User">
+                                                                <i class="bi bi-unlock-fill" style="color:green; font-size:20px;"></i>
+                                                            </a>
+                                                        </span>
+                                                    }
+
+                                                    @if (AC.AuthBlock == 1)
+                                                    {
+
+                                                        <span class="Edit" style="display:none">
+                                                            <a href="javascript:;" class="action-icon" data-toggle="tooltip" title="Permanent Blocked">
+                                                                <i class="bi bi-slash-circle-fill blinking-icon"></i>
+                                                            </a>
+                                                        </span>
+
+
+
+                                                        <!-- Custom CSS inside CSHTML -->
+                                                        <style>
+                                                            .blinking-icon {
+                                                                color: darkgrey;
+                                                                font-size: 20px;
+                                                                opacity: 1; /* Fully visible */
+                                                                transition: opacity 0.5s ease-in-out;
+                                                            }
+                                                        </style>
+
+
+
+
+                                                    }
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<!-- Modal for Block Options -->
+<div class="modal fade" id="blockUserModal" tabindex="-1" aria-labelledby="blockUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content glass-modal shadow-lg border-0 rounded-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white" id="blockUserModalLabel">Authorization Block</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                @*  <label class="fw-bold text-white fs-5">Select Block Type:</label> *@
+                <div class="d-flex justify-content-center gap-4 mt-3">
+                    @*   <div class="radio-container">
+                        <input type="radio" id="permanentBlock" name="blockType" value="1" class="custom-radio">
+                        <label for="permanentBlock">Permanent</label>
+                    </div>  *@
+                    <div class="radio-container">
+                        <input type="radio" id="temporaryBlock" name="blockType" value="2" class="custom-radio">
+                        <label for="temporaryBlock">Block User</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between border-0">
+                <button type="button" id="confirmBlock" class="btn btn-danger px-4">Confirm</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+
+
+    /* New Blue Glassmorphism Effect */
+    .glass-modal {
+        background: rgba(0, 25, 50, 0.4); /* Dark blue tint */
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    /* Modal Header */
+    .modal-header {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .modal-footer {
+        border: none;
+    }
+
+    /* Custom Radio Button */
+    .radio-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+    }
+
+    .custom-radio {
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border: 2px solid rgba(173, 216, 230, 0.7); /* Light blue */
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+    }
+
+        .custom-radio:checked {
+            background: radial-gradient(circle, #00aaff 40%, transparent 50%);
+            border: 2px solid #00aaff;
+            box-shadow: 0 0 10px #00aaff;
+        }
+
+    .radio-container label {
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    /* Button Styling */
+    .btn-danger {
+        background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        }
+</style>
+
+
+
+@section dateStyle
+{
+    <!--plugins-->
+
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+}
+
+
+@section dateScript
+{
+    <!--plugins-->
+
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+
+
+    function EditItem(EMPLOYEE_MASTER_KEY) {
+        //Common function for handling post requests for Edit and View
+           function handlePostRequest(actionKey, actionValue) {
+                $.post('/Authorization/SetViewDataAction', { key: actionKey, value: actionValue })
+                    .done(function (response) {
+                        console.log(actionKey + ' updated successfully:', response);
+
+
+
+                    window.location.href = "/Authorization/UserCreationView?" + encodeURIComponent("id=" + EMPLOYEE_MASTER_KEY);
+
+
+                    })
+                    .fail(function (xhr, status, error) {
+                        console.error('Error updating ' + actionKey + ':', error);
+                    });
+            }
+
+            // Set up the event listeners for View, Edit, and Add actions
+            $(".View i").click(function () {
+                handlePostRequest('ViewClicked', 'View');
+            });
+
+            $(".Edit i").click(function () {
+                handlePostRequest('ViewClicked', 'Edit');
+            });
+
+
+
+
+    }
+
+
+            $(".Add button").click(function () {
+
+
+                       // Common function for handling post requests for ADD
+                        function handlePostRequestForAdd(actionKey, actionValue) {
+                            $.post('/Authorization/SetViewDataAction', { key: actionKey, value: actionValue })
+                                .done(function (response) {
+                                    console.log(actionKey + ' updated successfully:', response);
+
+
+
+                                  window.location.href="/Authorization/UserCreationView";
+
+
+                                })
+                                .fail(function (xhr, status, error) {
+                                    console.error('Error updating ' + actionKey + ':', error);
+                                });
+                        }
+
+
+                  handlePostRequestForAdd('ViewClicked', 'Add');
+
+
+            });
+
+
+
+
+
+
+    function EmailSend(USER_MASTER_KEY) {
+        $("#email-loader").fadeIn();
+      
+         var datatoSend = {
+                    USER_MASTER_KEY: USER_MASTER_KEY,
+                    TenantMailSetupKey:5,
+                    ApplicationId: 0
+                   
+         }
+                $.ajax({
+                    url: "/Authorization/CredentialsSend",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(datatoSend),
+                    dataType: 'json',
+                    success: function (response) {
+                        $("#email-loader").fadeOut();
+                        //console.log(response);
+                        var d = $.parseJSON(response);
+                        if (d!= null) {
+                            swal.fire("Thank You!!!", "Email send to User!!", "success");
+                        }
+                        else {
+                            swal.fire("Alert!!!", "Please enter proper Email ID!!", "error");
+                        }
+                    },
+                    error: function (error) {
+                        $("#email-loader").fadeOut();
+                        console.log(error);
+                        swal.fire("Alert!!!", "Please contact to admin!!", "error");
+                        console.error('Error:', error.responseText);
+                    }
+                });
+
+    }
+
+
+    $(document).ready(function () {
+         // Initialize DataTable
+         $('#example').DataTable({
+             "pageLength": 50, // Set page length
+             "drawCallback": function(settings) {
+                 // Reapply the blinking effect after a page redraw
+               
+             }
+         });
+
+         // Start blinking when page loads
+       
+     });
+</script>
+
+<script>
+
+    let selectedUserID = null;
+
+    // Function to Show Modal & Store User ID
+    function showBlockModal(userID) {
+        selectedUserID = userID; // Store User ID
+        $("#blockUserModal").modal("show");
+    }
+
+    function blockUser() {
+        let blockType = $("input[name='blockType']:checked").val();
+
+        if (!blockType || !selectedUserID) {
+            alert("Please select a block type and ensure USER ID is provided.");
+            return;
+        }
+
+        let formData = new URLSearchParams();
+        formData.append("Key", parseInt(blockType)); // Key (1 for permanent, 2 for temporary)
+        formData.append("UserID", parseInt(selectedUserID)); // UserID
+
+        // Send data to server via AJAX
+        $.ajax({
+            url: "/Authorization/BlockUser",
+            type: "POST",
+            data: formData.toString(),
+            contentType: "application/x-www-form-urlencoded",
+            success: function (response) {
+                if (response.message == "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'User block status updated successfully.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Reload the page after user taps 'OK'
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Some Error Occurred! Please Contact Admin.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Reload the page after user taps 'OK'
+                            window.location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (xhr) {
+                alert("Error: " + xhr.responseText);
+            }
+        });
+    }
+
+    function UnblockUser(userID) {
+        let formData = new URLSearchParams();
+        formData.append("Key", parseInt(-1)); // Key (-1 for unblocking)
+        formData.append("UserID", parseInt(userID)); // UserID
+
+        // Send data to server via AJAX
+        $.ajax({
+            url: "/Authorization/BlockUser",
+            type: "POST",
+            data: formData.toString(),
+            contentType: "application/x-www-form-urlencoded",
+            success: function (response) {
+                if (response.message == "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'User activated successfully.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Reload the page after user taps 'OK'
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Some Error Occurred! Please Contact Admin.',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Reload the page after user taps 'OK'
+                            window.location.reload();
+                        }
+                    });
+                }
+            },
+            error: function (xhr) {
+                alert("Error: " + xhr.responseText);
+            }
+        });
+    }
+
+    // Attach Function to Confirm Button
+    $(document).ready(function () {
+        $("#confirmBlock").on("click", blockUser);
+    });
+
+</script>
+
+
+
+

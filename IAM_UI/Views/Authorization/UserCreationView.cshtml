@@ -1,0 +1,477 @@
+﻿@model IAM_UI.Models.UserCreationViewModel
+@{
+    ViewData["Title"] = "User Creation View";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+}
+
+<style>
+
+    #Names input[type=text] {
+        /*width: 94%;*/
+        box-sizing: border-box;
+        border: 2px solid #ff6a00;
+        border-radius: 4px;
+        font-size: 25px;
+        background-color: white;
+        background-image: url('~/assets/images/clear.png');
+        background-position: 8px 13px;
+        background-repeat: no-repeat;
+        padding: 22px 28px 25px 46px;
+    }
+
+    #ui-id-1 {
+        z-index: 9999;
+    }
+
+    .no-border {
+        border: none;
+        outline: none; /* This removes the outline when the element is focused */
+    }
+
+    .blue-checkbox:checked {
+        color: blue;
+    }
+
+    input[type="checkbox" i]:disabled {
+        background-color: blue;
+    }
+
+  
+</style>
+
+<div id="smartwizard">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#lbl1">
+                <strong>User Login</strong>
+                <br> Create user Login And Company Access
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#lbl2">
+                <strong>Role Access</strong>
+                <br>Role For a Perticular Company
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#lbl3">
+                <strong>Module Access</strong>
+                <br>Module Access For a User Employee
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" style="height:100% ; " >
+
+
+        <div id="lbl1" class="tab-pane" role="tabpanel" aria-labelledby="step-1" style="padding:0px; ">
+
+
+          
+
+
+
+            <div class="row">
+                <div class="col-xl-12 mx-auto">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body">
+                            <form id="_lbl1" class="lable1 form-horizontal needs-validation" novalidate>
+                                <div class="row mb-0" id="div_lbl1" style="  ">
+                                    @Html.HiddenFor(m => m.USER_MASTER_KEY)
+                                    @Html.HiddenFor(m => m.UserProfileID)
+                                    @Html.HiddenFor(m => m.UserID)
+                                    <span class="border pt-3 mb-3">
+                                    <div class="row mb-3 ">
+                                        <div class="col-md-2">
+                                            <label class="form-label">Full Name<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                                <input type="text" class="form-control" asp-for="FullName" disabled style="background-color:lightcyan">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">User Name<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="UserName" required>
+                                                <div class="invalid-feedback">This field is required.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                            <label class="form-label">Email ID<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="email" class="form-control" asp-for="Email_ID" required>
+                                                <div class="invalid-feedback">This field is required.</div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Password<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="Password" placeholder="Set a Password" required autocomplete="off">
+                                                <div class="invalid-feedback">This field is required.</div>
+                                        </div>
+                                    </div>
+
+                                    </span>
+
+                                    <span class="border pt-3 mb-3">
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                                <label class="form-label">Email Type<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                                @Html.DropDownListFor(model => model.EmailTypeId, ViewBag.EmailTypes as SelectList, new { @class = "form-select", autocomplete = "off", required = "required" })
+                                                <div class="invalid-feedback">This field is required.</div>
+
+                                        </div>
+                                        <div class="col-md-2">
+                                                <label class="form-label">User Category<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DropDownListFor(model => model.UserCategoryId, ViewBag.Category as SelectList, new { @class = "form-select", autocomplete = "off", required = "required" })
+                                                <div class="invalid-feedback">This field is required.</div>
+
+                                        </div>
+                                    </div>
+                                    </span>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                            <label class="form-label">First Name<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="FirstName" required>
+                                            <div class="invalid-feedback">This field is required.</div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Middle Name:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="MiddleName" >
+                                          
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                            <label class="form-label">Last Name<sup style="color:red">*</sup>:</label>
+                                            <div class="invalid-feedback">This field is required.</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="LastName" required>
+                                            <div class="invalid-feedback">This field is required.</div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">User Unique ID:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="User_Unique_ID" disabled style="background-color:lightcyan">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                            <label class="form-label">Current Address<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <textarea class="form-control" asp-for="CurrentAddress" required></textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Permanent Address:</label>
+                                            
+                                                <input type="checkbox" id="sameAsCurrent" class="form-check-input me-2">
+                                                <label for="sameAsCurrent" class="form-check-label">Same as Current</label>
+                                           
+                                        </div>
+                                        <div class="col-md-4">
+                                            <textarea class="form-control" asp-for="PermanentAddress"></textarea>
+                                        </div>
+                                        
+                                    </div>
+                                    
+
+
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                            <label class="form-label">Gender<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DropDownListFor(model => model.Gender, ViewBag.Gender as SelectList, new { @class = "form-select", autocomplete = "off", required="required" })
+                                            <div class="invalid-feedback">This field is required.</div>
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Mobile No<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="Mobile_No" required
+                                                   pattern="^\d{10}$" title="Mobile number must be exactly 10 digits" id="Mobile_No">
+                                            <div class="invalid-feedback">Mobile number must be exactly 10 digits.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-md-2">
+                                            <label class="form-label">DOB:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control" asp-for="DOB">
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Aadhar No:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="Aadhar_no">
+                                        </div>
+                                       
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        
+                                        <div class="col-md-2">
+                                            <label class="form-label">Pin<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" asp-for="Pin">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Accept Terms<sup style="color:red">*</sup>:</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="IsAcceptedTerms">
+                                        </div>
+                                    </div>
+
+                                    
+
+
+                                    <div class="ShowClass">
+                                        <div class="p-2 mb-2" style="border:1px solid lightgrey;">
+                                            <div class="row mb-3" style="overflow-y: auto;">
+                                                <h5>Existing Details</h5>
+                                                <div class="col-md-6">
+                                                    <label>Company Access:<sup style="color:red">*</sup>:</label>
+                                                    <div id="ErrorCompany" style="display:none;" class="text-danger">Please Select Atleast One Company</div>
+                                                    <div id="CompanyList"></div>
+                                                    <div class="row" style="display: flex; justify-content: right;">
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mt-3">
+                                                    <span class="ModalView" style="display:none">
+                                                        <button type="button" id="SaveAuth_Lavel1" class="btn btn-success">
+                                                            <i class="fas fa-save"></i>&nbsp; Save
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                         
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+        <div id="lbl2" class="tab-pane" role="tabpanel" aria-labelledby="step-3" style="padding:0px">
+       
+
+
+            <div class="row">
+
+                <div class="col-xl-12 mx-auto">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body">
+                            <form id="_lbl2" class="lable2 form-horizontal needs-validation" novalidate>
+                             
+                                <div class="row mb-0">
+
+                                    <div class="row mb-3 ">
+
+                                        <div class="col-md-3">
+
+                                            <label for="inputZip" class="form-label">Company Name<sup style="color:red">*</sup>:</label>
+
+                                        </div>
+                                        <div class=" col-md-3">
+                                            <select asp-for="empCompanyId" class="form-select" required>
+                                            </select>
+                                            <span asp-validation-for="empCompanyId" class="text-danger" data-valmsg-replace="true"></span>
+                                        </div>
+
+                                        <div class="col-md-6" style=" overflow-y: auto; max-height: 300px;">
+
+                                            <label>Role Access :</label>
+
+                                            <div id="ErrorUserTypeList" style="display:none;" class="text-danger">Please Select Atleast One option</div>
+                                            <div id="UserTypeList">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-3 col-md-12" style="display: flex; justify-content: right;">
+                                        <span class="ModalView" style="display:none">
+                                            <button type="button" id="SaveApproval_Lavel2" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Save</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lbl3" class="tab-pane" role="tabpanel" aria-labelledby="step-5" style="padding:0px">
+         
+
+            <div class="row">
+
+                <div class="col-xl-12 mx-auto">
+                    <div class="card border-top border-0 border-4 border-info">
+                        <div class="card-body">
+                            <form id="_lbl3" class="lable3 form-horizontal needs-validation" novalidate>
+
+                                <div class="row mb-0">
+
+                                    <div class="row mb-3 ">
+
+                                        <div class="col-md-1">
+
+                                            <label for="inputZip" class="form-label">Company Name<sup style="color:red">*</sup>:</label>
+
+                                        </div>
+                                        <div class="col-md-3 mr-2">
+                                            <select asp-for="empCompanyId_lbl3" class="form-select" required>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-1">
+
+                                            <label>RoleAccess:</label>
+
+                                        </div>
+                                        <div class="col-md-3">
+
+                                     
+                                            <select asp-for="UserTypeId" class="form-select" required>
+                                                <option value="">-Select-</option> <!-- Default placeholder -->
+                                            </select>
+                                        
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                            <label for="inputZip" class="form-label">Application<sup style="color:red">*</sup>:</label>
+
+                                        </div>
+                                        <div class=" col-md-3">
+                                           
+                                            <select id="application_ID" class="form-select" required>
+                                                <option value="">-Select-</option> <!-- Default placeholder -->
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="row mb-2">
+
+
+
+                                        <div class="col-md-6" style=" overflow-y: auto; max-height: 300px;">
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row mb-3 ">
+
+
+                                        <div class="col-md-12">
+                                            <label>Module Access:</label>
+                                            <div class="table-responsive" id="ModuleDiv">
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-3 col-md-12" style="display: flex; justify-content: right;">
+                                        <span class="ModalView" style="display:none">
+                                            <button type="button" id="SaveApproval_Lavel3" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Save</button>
+                                        </span>
+                               
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section dateStyle
+{
+    <link href="~/assets/plugins/smart-wizard/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+
+}
+
+@section dateScript
+{
+    <!--plugins-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- jQuery UI library -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <script src="~/assets/plugins/smart-wizard/js/jquery.smartWizard.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Sweet Alerts js -->
+    <script src="~/assets/libs/sweetalert2/sweetalert2.all.min.js"></script>
+    <!-- Sweet alert init js-->
+    <script src="~/assets/js/pages/sweet-alerts.init.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+
+}
+
+
+
+
+<script src="~/js/usercreation.js"></script>

@@ -1,0 +1,128 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="FastReport.Compat" Version="2025.1.12" />
+    <PackageReference Include="FastReport.OpenSource" Version="2025.1.0" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2025.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Loginasset\css\app-rtl.min.css.map" />
+    <None Include="wwwroot\Loginasset\css\app.min.css.map" />
+    <None Include="wwwroot\Loginasset\css\bootstrap-rtl.min.css.map" />
+    <None Include="wwwroot\Loginasset\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\Loginasset\css\icons.min.css.map" />
+    <None Include="wwwroot\Loginasset\fonts\bootstrap-icons.svg" />
+    <None Include="wwwroot\Loginasset\fonts\bootstrap-icons.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-bold.svg" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-bold.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-light.svg" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-light.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-medium.svg" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-medium.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-regular.svg" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-regular.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-semibold.svg" />
+    <None Include="wwwroot\Loginasset\fonts\cerebrisans-semibold.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\dripicons-v2.svg" />
+    <None Include="wwwroot\Loginasset\fonts\dropify.svg" />
+    <None Include="wwwroot\Loginasset\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\Loginasset\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\Loginasset\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\Loginasset\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\feather.svg" />
+    <None Include="wwwroot\Loginasset\fonts\footable.svg" />
+    <None Include="wwwroot\Loginasset\fonts\materialdesignicons-webfont.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\simple-Line-Icons.svg" />
+    <None Include="wwwroot\Loginasset\fonts\simple-Line-Icons.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\summernote.woff2" />
+    <None Include="wwwroot\Loginasset\fonts\themify.svg" />
+    <None Include="wwwroot\Loginasset\fonts\weathericons-regular-webfont.svg" />
+    <None Include="wwwroot\Loginasset\fonts\weathericons-regular-webfont.woff2" />
+    <None Include="wwwroot\Loginasset\js\app.min.js" />
+    <None Include="wwwroot\Loginasset\js\head.js" />
+    <None Include="wwwroot\Loginasset\js\pages\add-product.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\animation.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\apexcharts.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\bootstrap-tables.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\c3.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\calendar.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\chartist.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\chartjs.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\coming-soon.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\create-project.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\crm-dashboard.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\crm-leads.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\crm-opportunities.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\customers.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\dashboard-1.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\dashboard-2.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\dashboard-3.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\dashboard-4.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\datatables.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\dragula.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\ecommerce-dashboard.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\flot.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\fontawesome.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\foo-tables.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-advanced.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-fileuploads.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-imagecrop.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-masks.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-pickers.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-quilljs.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-validation.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-wizard.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\form-xeditable.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\gallery.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\google-maps.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\inbox.js" />
+    <None Include="wwwroot\Loginasset\js\pages\jquery.chat.js" />
+    <None Include="wwwroot\Loginasset\js\pages\jquery.todo.js" />
+    <None Include="wwwroot\Loginasset\js\pages\jsgrid.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\kanban.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\loading-btn.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\mapeal-maps.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\material-symbols.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\materialdesign.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\morris.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\nestable.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\peity.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\project-details.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\range-sliders.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\responsive-table.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\sparkline.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\sweet-alerts.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\tabledit.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\tablesaw.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\task.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\tickets.js" />
+    <None Include="wwwroot\Loginasset\js\pages\toastr.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\tour.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\treeview.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\vector-maps.init.js" />
+    <None Include="wwwroot\Loginasset\js\pages\widgets.init.js" />
+    <None Include="wwwroot\Loginasset\js\vendor.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Reports\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CommonUtility">
+      <HintPath>..\..\..\IAM\IAM\IAM_UI\CommonUtility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

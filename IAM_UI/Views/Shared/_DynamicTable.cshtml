@@ -1,0 +1,75 @@
+﻿@model Dictionary<string, string>
+
+@{
+    // Extract the dynamic list and modalId from the dictionary
+    var modalId = Model["modalId"];
+    var list = Model["list"];
+
+    // Deserialize the dynamic list
+    List<dynamic> dynamicList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<dynamic>>(list);
+
+    var firstItem = dynamicList?.FirstOrDefault();
+    string[] tableHead = new string[0];
+    string keyName = string.Empty;
+    string tableName = "dynamicTable_" + modalId;
+
+    if (firstItem != null)
+    {
+        var firstJObject = (Newtonsoft.Json.Linq.JObject)firstItem;
+        tableHead = firstJObject.Properties().Select(p => p.Name).ToArray();
+        keyName = tableHead[0]; // Assuming the first property is the key
+    }
+}
+
+@if (dynamicList != null && dynamicList.Count > 0)
+{
+    <table id="@tableName" class="table table-striped table-bordered" style="width:100%; text-align:center">
+        <thead class="table-secondary">
+            <tr>
+                <th>Sl No</th>
+                @for (int i = 1; i < tableHead.Length; i++)
+                {
+                    <th>@tableHead[i]</th>
+                }
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+                foreach (var item in dynamicList)
+                {
+                    count++;
+                    var jObject = (Newtonsoft.Json.Linq.JObject)item;
+
+                    if (jObject[tableHead[0]].ToString() == "" && dynamicList.Count == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>@count</td>
+                            @for (int i = 1; i < tableHead.Length; i++)
+                            {
+                                <td>@(jObject[tableHead[i]] != null ? jObject[tableHead[i]].ToString() : string.Empty)</td>
+                            }
+                            <td>
+                                <a href="javascript:;" class="action-icon">
+                                    <i class="mdi mdi-square-edit-outline" data-bs-toggle="modal" title="Edit" onclick="EditItem_@(modalId)('@jObject[keyName]')" style=" color:forestgreen"></i>
+                                </a>
+                                <a href="javascript:;" class="action-icon">
+                                    <i class="mdi mdi-delete" data-toggle="modal" title="Delete" onclick="DeleteItem_@(modalId)('@jObject[keyName]')" style=" color:red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data available.</p>
+}

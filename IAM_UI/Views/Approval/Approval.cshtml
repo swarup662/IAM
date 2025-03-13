@@ -1,0 +1,173 @@
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@using IAM_UI.Models;
+@model IAM_UI.Models.ApprovalModel;
+
+
+@{
+    ViewData["Title"] = "Approval";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+
+    var Dynamic_Labels = ViewBag.Dynamic_Labels as Dictionary<string, string>;
+
+
+}
+<div class="container-fluid simplebar-content-wrapper custom-scroll-content">
+    <input type="hidden" asp-for="Approval_level_One_key" />
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                    <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                        <div class="navbar-brand mb-0"><h4>Approval</h4> </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><span>Dasboard</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item"><span>Pages</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item active" aria-current="page">Approval</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-11">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style=" box-shadow: 2px 2px 5px Gray">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row mb-2">
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-success waves-effect waves-light" onclick="@("window.location.href='" + @Url.Action("_ApprovalView", "Approval") + "'");"><i class="mdi mdi-plus-circle me-2"></i> Add Record</button>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="text-sm-end">
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Import</button>
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Export Pdf</button>
+                                        <button type="button" style="display:none" class="btn btn-blue mb-2 me-1">Export Excel</button>
+                                        <button type="button" style="display:none" class="btn btn-primary mb-2 me-1">Print</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" id="RefreshModel"><i class="mdi mdi-cloud-refresh me-2"></i> Refresh</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="example2" class="table table-striped table-bordered" style="width:100%;text-align:center;">
+                                    <thead class="table-primary">
+                                        <tr>
+                                           
+
+                                            <th>Approval Type</th>
+                                            <th>Module Name - Access</th>
+                                            <th>Company Name</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (ApprovalModel EL in ViewBag.EnquiryList)
+                                        {
+                                            <tr>
+                                                
+                                                <td>@EL.ApprovalTypeDesc</td>
+                                                <td>@EL.ModuleName</td>
+                                                <td>@EL.COMPANY_NAME</td>
+                                                <td>
+                                                    <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-square-edit-outline" onclick="EditItem(@EL.Approval_level_One_key)" data-toggle="tooltip" title="Edit" style="color:blueviolet"></i></a>
+                                           @*          <a href="/Approval/_ApprovalView?ApprovalLevelKey=@EL.Approval_level_One_key" class="action-icon"><i class="mdi mdi-square-edit-outline" data-toggle="tooltip" title="Edit" style="color:forestgreen"></i></a> *@
+                                                     @* <a href="javascript:;" class="action-icon"> <i class="mdi mdi-delete" onclick="DeleteEnquiry(@EL.Approval_level_One_key)" data-toggle="tooltip" title="Delete" style="color:red"></i></a> *@
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section dateStyle
+{
+    <!--plugins-->
+
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+}
+
+
+@section dateScript
+{
+    <!--plugins-->
+
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@* <script src="~/js/Approval.js"></script>
+ *@
+<script>
+        $('#RefreshModel').click(function () {
+        window.location.reload();
+    });
+
+
+    $(document).ready(function () {
+        $('#example2').DataTable();
+    });
+</script>
+<script>
+    function EditItem(ApprovalLevelKey) {
+        debugger;
+        window.location.href = "/Approval/_ApprovalView?" + encodeURIComponent("id=" + ApprovalLevelKey);
+
+    }
+    function DeleteEnquiry(Approval_level_One_key) {
+        Swal.fire({
+            title: 'Do you want to Delete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.getJSON("/Authortization/DeleteAPPROVALLEVELONE",
+                    {
+                        id: Approval_level_One_key
+                    },
+                    function (data) {
+                        //console.log(data)
+                        if (data.msg = "success") {
+                            swal.fire("Done", "Record Delete SuccessFully !!", "success");
+                        }
+                        else {
+                            swal.fire("Oppss!!!", "Please Contact Admin", "error");
+                        }
+                        window.location.reload();
+                    });
+            } else if (result.isDenied) {
+                Swal.fire('Welcome ', '', 'info')
+            }
+        })
+    }
+</script>
+
+
+

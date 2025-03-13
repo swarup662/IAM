@@ -1,0 +1,573 @@
+﻿@model IAM_UI.Models.UserModel
+
+@{
+    ViewData["Title"] = "Group Head Personnel";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+
+}
+<style>
+    .submenu {
+        background-color: #f9f9f9; /* Light background for submenus */
+        padding: 10px; /* Add padding for clarity */
+    }
+
+    .stylish-label {
+        font-weight: bold;
+        font-family: 'Arial', sans-serif; /* Replace 'Arial' with your preferred font */
+        font-size: 1.1rem; /* Adjust size as desired */
+        color: #333; /* Adjust color as desired */
+        letter-spacing: 0.5px;
+    }
+
+    .checkbox-container {
+        display: flex; /* Use flexbox for responsive layout */
+        flex-wrap: wrap; /* Allow wrapping of columns */
+        margin: 10px 0; /* Vertical spacing */
+    }
+
+    .checkbox-box {
+        flex: 1 1 30%; /* Allow three columns */
+        max-height: 200px; /* Set maximum height for scrolling */
+        overflow-y: auto; /* Enable vertical scrolling when content exceeds height */
+        padding: 10px; /* Padding around the checkboxes */
+
+        border-radius: 4px; /* Rounded corners */
+        margin-right: 10px; /* Space between columns */
+        PADDING-LEFT: 10%;
+    }
+
+        .checkbox-box:last-child {
+            margin-right: 0; /* Remove margin for the last column */
+        }
+
+        .checkbox-box .form-check {
+            display: flex; /* Use flexbox for label and input alignment */
+            align-items: center; /* Center vertically */
+            padding: 5px; /* Space between individual checkboxes */
+        }
+
+            .checkbox-box .form-check .form-check-input {
+                margin-right: 8px; /* Space between checkbox and label */
+            }
+
+    .text-muted {
+        color: #6c757d; /* Bootstrap muted text color */
+        padding: 5px 0; /* Padding for the message */
+    }
+
+    .dropdown-item {
+        padding: 5px 10px; /* Padding for dropdown items */
+    }
+
+        .dropdown-item .form-check {
+            margin: 5px 0; /* Space between job role checkboxes */
+        }
+
+    .loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050; /* Ensure it overlays all content */
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+    }
+</style>
+
+
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                    <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                        <div class="navbar-brand mb-0"><h4>Group Head Registration</h4> </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><span>Dasboard</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item"><span>User</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item active" aria-current="page">Group Head Registration</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style=" box-shadow: 2px 2px 5px Gray">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row mb-2">
+                                <div class="col-sm-4">
+                                    <span class="Add" style="display:none">
+                                    <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#GroupHeadPersonnelModal"><i class="mdi mdi-plus-circle me-2"></i> Add Record</button>
+                                    </span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="text-sm-end">
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Import</button>
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Export Pdf</button>
+                                        <button type="button" style="display:none" class="btn btn-blue mb-2 me-1">Export Excel</button>
+                                        <button type="button" style="display:none" class="btn btn-primary mb-2 me-1">Print</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" id="RefreshModel"><i class="mdi mdi-cloud-refresh me-2"></i> Refresh</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="table-responsive">
+                                <div id="email-loader" class="loader-overlay" style="display: none;">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                                <table id="dynamicTable_GroupHead" class="table table-striped table-bordered" style="width:100% ;text-align:center">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th>Guest Name</th>
+                                            <th>Email Id</th>
+                                            <th>Mobile No</th>
+                                            <th>Effective Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                    <tbody>
+                                        @{
+                                            int count = 0;
+                                        }
+                                        @foreach (UserModel AC in ViewBag.GroupHeadDetails)
+                                        {
+                                            <tr>
+
+                                                @*<td>@AC.GroupHeadTypeDtls</td>*@
+                                                <th>@AC.Name</th>
+                                                <th>@AC.EmailId</th>
+                                                <th>@AC.MobileNo</th>
+                                                <th>@Convert.ToDateTime(AC.EffectiveDate).ToString("yyyy-MM-dd")</th>
+                                                <td>
+
+                                                    <span class="Edit" style="display:none">
+                                                    <a href="javascript:;" class="action-icon"><i class="mdi mdi-square-edit-outline" onclick="EditItem(@AC.GroupHeadPersonnelId)" data-toggle="tooltip" title="Edit" style="color:forestgreen"></i></a>
+                                                    </span>
+                                                    <span class="View" style="display:none">
+                                                        <a href="javascript:;" class="action-icon"><i class="mdi mdi-eye-circle-outline" onclick="EditItem(@AC.GroupHeadPersonnelId)" data-toggle="tooltip" title="View" style="color:forestgreen"></i></a>
+                                                    </span>
+                                                    <a href="javascript:;" class="action-icon"><i class="mdi mdi-email-send" onclick="EmailSend(@AC.GroupHeadPersonnelId)" data-toggle="tooltip" title="Mail" style="color:forestgreen"></i></a>
+                                                    <span class="Delete" style="display:none">
+                                                    <a href="javascript:;" class="action-icon"> <i class="mdi mdi-delete" onclick="TagDelete(@AC.GroupHeadPersonnelId)" data-toggle="tooltip" title="Delete" style="color:red"></i></a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+
+                                </table>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="GroupHeadPersonnelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            @using (Html.BeginForm("SaveGroupHeadPersonnel", "GroupHeadPersonnelUI", FormMethod.Post, new { @class = "form-horizontal needs-validation", role = "form", enctype = "multipart/form-data", novalidate = "true" }))
+            {
+                <div class="modal-header border-bottom border-0 border-4 border-info" style="background-color: #85b1b4; ">
+                    <h5 class="modal-title showCls" id="staticBackdropLabel">Group Head registration From:: [New]</h5>
+
+                    @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color:white">X</button>*@
+                </div>
+
+                <div class="modal-body">
+                    @Html.HiddenFor(m => m.GroupHeadPersonnelId)
+                    <input type="hidden" id="UserName" name="UserName">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="row mb-2">
+                                @* <label class="col-md-2 col-form-label" for="confirm1">Designation<sup style="color:red">*</sup></label>
+                            <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.GroupHeadId, ViewBag.GroupHeadList as SelectList, new { @class = "form-control border-start-1", @required = "required" })
+                            </div>*@
+                                <label class="col-md-2 pl-5 col-form-label" for="confirm1">Department<sup style="color:red">*</sup></label>
+                                <div class="col-md-10">
+
+                                    <div class="row mb-2 p-1" style="border: solid;border-color: lightgrey;border-width: thin;border-radius:8px;">
+
+                                        @foreach (var item in ViewBag.GroupHeadTypeList as SelectList)
+                                        {
+                                            <div class="col-md-4">
+                                                @if (@item.Value == "0")
+                                                {
+                                                    <label style="font-weight:900">
+                                                        <input type="checkbox" class="checkbox-item" name="selectedGroupHeadTypes" value="@item.Value" /> @item.Text
+
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label>
+                                                        <input type="checkbox" class="checkbox-item" name="selectedGroupHeadTypes" value="@item.Value" /> @item.Text
+
+                                                    </label>
+                                                }
+
+
+                                            </div>
+
+                                        } 
+                                        @* <span validation-for="selectedGroupHeadTypes" class="text-danger"></span>*@
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-md-2 col-form-label" for="confirm1">Member Name<sup style="color:red">*</sup></label>
+                                <div class="col mb-10" style="border: solid;border-color: lightgrey;border-width: thin;border-radius:8px;">
+                                    <div class="row mb-2" style="margin-top:10px">
+                                        <div class="col-md-4">
+
+                                            <input type="text" class="form-control border-start-1 req" required="required" asp-for="FirstName" placeholder="First Name" onchange="Add();" autocomplete="off">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control border-start-1 req" asp-for="MiddleName" placeholder="Middle Name" onchange="Add();" autocomplete="off">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control border-start-1 req" required="required" asp-for="LastName" placeholder="Last Name" onchange="Add();" autocomplete="off">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">Full Name</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control border-start-0", placeholder = "Full Name", required = "required", autocomplete = "off", @readonly = "readonly" })
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <a href="javascript:;" id="VerifyName" class="btn btn-info col-md-2">Verify</a>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">Father's Name<sup style="color:red">*</sup></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control border-start-1 req" asp-for=FathersName autocomplete="off">
+                                    <span asp-validation-for="FathersName" required="required" class="text-danger"></span>
+                                </div>
+                                <label class="col-md-1 col-form-label" for="confirm1">Address<sup style="color:red">*</sup></label>
+                                <div class="col-md-5">
+                                    <textarea class="form-control border-start-1 req" required="required" asp-for=Address autocomplete="off"></textarea>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">Mobile No<sup style="color:red">*</sup></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control border-start-1 req" required="required" asp-for="MobileNo" autocomplete="off" onchange="generatePassword();">
+                                    <span asp-validation-for="MobileNo" class="text-danger"></span>
+                                </div>
+                                <label class="col-md-2 col-form-label" for="confirm1">Email Id<sup style="color:red">*</sup></label>
+                                <div class="col-md-4">
+                                    <input type="email" required="required" class="form-control border-start-1 req" asp-for="EmailId" autocomplete="off">
+                                    <span asp-validation-for="EmailId" class="text-danger"></span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row mb-2">
+
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">Pan<sup style="color:red">*</sup></label>
+                                <div class="col-md-4">
+                                    <input type="text" required="required" class="form-control border-start-1 req" asp-for="PAN" autocomplete="off">
+                                    <span asp-validation-for="PAN" class="text-danger"></span>
+                                </div>
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">Aadhar<sup style="color:red">*</sup></label>
+                                <div class="col-md-4">
+                                    <input type="text" required="required" class="form-control border-start-1 req" asp-for=Aadhar autocomplete="off">
+                                    <span asp-validation-for="Aadhar" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row mb-2">
+
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">DIN<sup style="color:red"></sup></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control border-start-1 req" asp-for=DIN autocomplete="off">
+                                    <span asp-validation-for="DIN" class="text-danger"></span>
+                                </div>
+                                <label class="col-md-2 pl-3 col-form-label" for="confirm1">Effective Date<sup style="color:red">*</sup></label>
+                                <div class="col-md-4">
+                                    <input type="date" required="required" class="form-control border-start-1 req" asp-for=EffectiveDate autocomplete="off">
+                                </div>
+
+                            </div>
+
+                            <div style="display:none">
+                                <div class="row mb-2" style="margin-top:7px;">
+
+
+                                    <label class="col-md-3 pl-3 col-form-label" for="confirm1">User Name</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="OtherCompanyDirectors1">
+                                        <span asp-validation-for="OtherCompanyDirectors1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <label class="col-md-3 col-form-label" for="confirm1">Password</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="OtherCompanyDirectors2">
+                                        <span asp-validation-for="OtherCompanyDirectors2" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mb-2">
+                                    <label class="col-md-3 pl-3 col-form-label" for="confirm1">Other Company Directors1</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="OtherCompanyDirectors3">
+                                        <span asp-validation-for="OtherCompanyDirectors3" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <label class="col-md-3 col-form-label" for="confirm1">Other Company Directors2</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="OtherCompanyDirectors4">
+                                        <span asp-validation-for="OtherCompanyDirectors4" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <label class="col-md-3 col-form-label" for="confirm1">Other Company Directors3</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="OtherCompanyDirectors5">
+                                        <span asp-validation-for="OtherCompanyDirectors5" class="text-danger"></span>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-2">
+                                <div class="col-md-12">
+                                    <div style="border: solid;border-color: darkgray;border-width: thin;border-radius:8px;">
+                                        <div class="row mb-2" style="margin-top:7px;margin-left:3px;margin-right:3px;">
+                                            <label class="col-md-2 col-form-label" for="confirm1">User Name<sup style="color:red">*</sup></label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control border-start-0", placeholder = "User Name", required = "required", autocomplete = "off", @readonly = "readonly" })
+                                                <span asp-validation-for="User_Name" class="text-danger"></span>
+                                            </div>
+                                            <label class="col-md-2 col-form-label" for="confirm1">Password<sup style="color:red">*</sup></label>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(m => m.PWD, new { @class = "form-control border-start-0", placeholder = "Password", required = "required", autocomplete = "off", @readonly = "readonly" })
+                                                <span asp-validation-for="PWD" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-2">
+                                    <label for="CompanyId" class="form-label">Company<sup style="color:red">*</sup>:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header bg-primary py-2 text-white d-flex justify-content-between align-items-center" style="height: calc(2.25rem + 2px);">
+                                            <div class="card-widgets ms-auto">
+                                                <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                                <a href="javascript:;" class="collapse-toggle" data-bs-toggle="collapse" data-bs-target="#cardCollapseCompany">
+                                                    <i class="mdi mdi-minus"></i>
+                                                </a>
+                                                <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                            </div>
+                                        </div>
+                                        <div id="cardCollapseCompany" class="collapse show">
+                                            <div class="card-body">
+                                                <div id="CompanyIdContainer" class="checkbox-container">
+                                                    <div class="checkbox-box" id="CompanyId" style="max-height: 200px; overflow-y: auto;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="selectAllCompany">
+                                                            <label class="form-check-label" for="selectAllCompany">Select All</label>
+                                                        </div>
+                                                        @if (ViewBag.Company is System.Data.DataTable)
+                                                        {
+                                                            var companyTable = (System.Data.DataTable)ViewBag.Company;
+                                                            foreach (System.Data.DataRow row in companyTable.Rows)
+                                                            {
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" class="form-check-input CompanyId-checkbox" id="CompanyId-@row[0]" value="@row[0]" data-companyid="@row[1]">
+                                                                    <label class="form-check-label" for="CompanyId-@row[0]">@row[1]</label>
+                                                                </div>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="text-danger">No companies available.</p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    <label for="UserTypeId" class="form-label">Role<sup style="color:red">*</sup>:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header bg-primary py-2 text-white d-flex align-items-center" style="height: calc(2.25rem + 2px);">
+                                            <div class="card-widgets ms-auto">
+                                                <a href="javascript:;" data-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                                                <a href="javascript:;" class="collapse-toggle" data-bs-toggle="collapse" data-bs-target="#cardCollapseUserTypeId">
+                                                    <i class="mdi mdi-minus"></i>
+                                                </a>
+                                                <a href="#" data-toggle="remove"><i class="mdi mdi-close"></i></a>
+                                            </div>
+                                        </div>
+                                        <div id="cardCollapseUserTypeId" class="collapse show">
+                                            <div class="card-body">
+                                                <div id="UserTypeIdContainer" class="checkbox-container">
+                                                    <div class="checkbox-box" id="UserTypeId" style="max-height: 200px; overflow-y: auto;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="selectAllUserTypeId">
+                                                            <label class="form-check-label" for="selectAllUserTypeId">Select All</label>
+                                                        </div>
+                                                        @if (ViewBag.Company is System.Data.DataTable)
+                                                        {
+                                                            var companyTable = (System.Data.DataTable)ViewBag.Role;
+                                                            foreach (System.Data.DataRow row in companyTable.Rows)
+                                                            {
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" class="form-check-input UserTypeId-checkbox"
+                                                                           id="UserTypeId-@row[0]"
+                                                                    @* data-hiddendeCompany="@row[1]" *@
+                                                                           value="@row[0]">
+                                                                    <label class="form-check-label" for="UserTypeId-@row[0]">@row[1]</label>
+                                                                </div>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="text-danger">No companies available.</p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <span class="ModalView" style="display:none">
+                    <button type="button" id="btnSaveGroupHeadPersonnel" name="SaveGroupHeadPersonnel" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Submit</button>
+                    </span>
+                    <a href="javascript:;" id="CloseGroupHead" class="btn btn-warning"><i class="mdi mdi-close"></i>&nbsp; Close</a>
+                </div>
+
+                Html.EndForm();
+            }
+
+        </div>
+
+
+
+    </div>
+</div>
+
+@section dateStyle
+{
+    <!--plugins-->
+
+    <link href="~/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+}
+
+
+@section dateScript
+{
+    <!--plugins-->
+
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="~/js/SaveGroupHeadDtls.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var message = '@TempData["MSG"]';
+        if (message == "success") {
+            Swal.fire("Done", "Record Saved Successfully !!", "success");
+        } else if (message == "exist") {
+            Swal.fire("Oops!!!", "Record already exists", "error");
+        } else if (message == "Fail") {
+            Swal.fire("Oops!!!", "Please Contact Admin", "error");
+        }
+    });
+
+
+ </script>

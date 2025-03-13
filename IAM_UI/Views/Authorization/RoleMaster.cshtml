@@ -1,0 +1,269 @@
+﻿@model IAM_UI.Models.RoleMasterModel
+@{
+    ViewData["Title"] = "RoleMaster";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    var ModuleId = Context.Items["ModuleId"] as string;
+}
+
+
+
+
+<div class="container-fluid ">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style="padding-bottom: 10px; padding-top: 7px; box-shadow: 2px 2px 5px Gray;">
+                    <div class="d-flex justify-content-between align-items-center breadcrumb mt-1  mb-1 mr- ml-0">
+                        <div class="navbar-brand mb-0"><h4>Role Name</h4> </div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><span>Dashboard</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item"><span>Role Master</span></li>
+                                <li class="breadcrumb-item"><i class="lni lni-chevron-right"></i></li>
+                                <li class="breadcrumb-item active" aria-current="page">Role Name</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style=" box-shadow: 2px 2px 5px Gray">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row mb-2">
+                                <div class="col-sm-4">
+                                    @* <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#BudgetCatModal"><i class="mdi mdi-plus-circle me-2"></i> Add Record</button> *@
+                                    <span class="Add" style="display:none">
+                                        <button type="button" id="AddButton" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#RoleMasterModal"><i class="mdi mdi-plus-circle me-2"></i> Add Record</button>
+                                    </span>
+                                </div>
+                                <div class="col-sm-8 ">
+                                    <div class="text-sm-end">
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Import</button>
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Export Pdf</button>
+                                        <button type="button" style="display:none" class="btn btn-blue mb-2 me-1">Export Excel</button>
+                                        <button type="button" style="display:none" class="btn btn-primary mb-2 me-1">Print</button>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" id="RefreshModel"><i class="mdi mdi-cloud-refresh me-2"></i> Refresh</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive">
+
+
+                                <table id="example" class="table table-striped table-bordered" style="width:100%;text-align:center">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th>SerialNo</th>
+
+
+                                            @*  <th style="visibility:hidden">@labels["IBcol03"]</th> *@
+
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Hierarchy</th>
+                                            <th> Action </th>
+                                            <th class="Approve">
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int count = 0;
+                                        }
+                                        @foreach (RoleMasterModel AC in ViewBag.RoleMaster)
+                                        {
+                                            count++;
+                                            <tr>
+                                                <td>@count</td>
+
+
+                                            
+                                                <td>@AC.UserTypeName</td>
+                                                <td>@AC.UserTypeDescription</td>
+                                                <td>@AC.Hierarchy</td>
+
+                                                @*   <td><span class="badge rounded-pill bg-success" style="visibility:hidden">Active</span> </td> *@
+                                                <td>
+                                                    <span class="Edit" style="display:none">
+                                                    <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-square-edit-outline" onclick="EditItem(@AC.UserTypeId)" data-toggle="tooltip" title="Edit" style="color:forestgreen"></i></a>
+                                                    </span>
+                                                    <span class="View" style="display:none">
+                                                        <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-eye-circle-outline" onclick="EditItem(@AC.UserTypeId)" data-toggle="tooltip" title="View" style="color:forestgreen"></i></a>
+                                                    </span>
+                                                    <span class="Delete" style="display:none">
+                                                    <a href="javascript:;" class="action-icon DeleteButton"> <i class="mdi mdi-delete" onclick="TagDelete(@AC.UserTypeId)" data-toggle="tooltip" title="Delete" style="color:red"></i></a>
+                                                    </span>
+                                                    <br>
+                                                    <span class="Approval" style="display:none;">
+                                                        <button type="button" data-toggle="tooltip" title="Send For Approval"
+                                                                class="btn  btn-sm approvalbutton"
+                                                                onclick="sendtoapproval(@AC.UserTypeId, @ModuleId)"
+                                                                style="border-width: 2px; font-weight: bold; background-color:rgb(140, 104, 205) ; --ct-btn-padding-y: 0px;     --ct-btn-padding-x: 6px;">
+                                                            <i class="fas fa-paper-plane" style="color:white"></i>
+                                                        </button>
+
+
+                                                    </span>
+                                                </td>
+
+
+                                                <td class="Approve" style="display: none;">
+
+                                                    <button class="btn btn-success" onclick="ApproveReject('Accept',@AC.UserTypeId,@ModuleId)">Accept</button>
+
+                                                    <button class="btn btn-danger" onclick="ApproveReject('Reject',@AC.UserTypeId,@ModuleId)">Reject</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="RoleMasterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 585px;">
+        <div class="modal-content">
+            @using (Html.BeginForm("SaveRoleMaster", "Authorization", FormMethod.Post, new { @class = "form-horizontal needs-validation", role = "form", enctype = "multipart/form-data", novalidate = "true" }))
+            {
+                <div class="modal-header border-bottom border-0 border-4 border-info" style="background-color: #85b1b4; ">
+
+
+                    <label for="RoleMaster" id="staticBackdropLabel"> Role Master :: [New]</label> 
+
+                    @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color:white">X</button>*@
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row">
+                        <input type="hidden" asp-for="UserTypeId" />
+
+                            <div class="row mb-4">
+                                <div class="col-sm-4">
+                                <label for="UserTypeName" style="display: block; margin-bottom: 5px;">Name<sup style="color:red">*</sup>:</label>
+                                </div>
+                                <div class="col-sm-8 text-secondary">
+                                @Html.TextBoxFor(m => m.UserTypeName, new { type = "text", @class = "form-control", placeholder = "Max 100 Characters Allowed.", autocomplete = "off", required = "required" })
+                                @Html.ValidationMessageFor(m => m.UserTypeName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-sm-4">
+                                    <label for="UserTypeDescription" style="display: block; margin-bottom: 5px;">Description<sup style="color:red">*</sup>:</label>
+                                </div>
+                                <div class="col-sm-8 text-secondary">
+                                    @Html.TextBoxFor(m => m.UserTypeDescription, new { type = "text", @class = "form-control", autocomplete = "off", required = "required" })
+                                    @Html.ValidationMessageFor(m => m.UserTypeDescription, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-sm-4">
+                                <label for="LevelUpto" style="display: block; margin-bottom: 5px;">Level Upto:</label>
+                                </div>
+                                <div class="col-sm-8 text-secondary">
+                                   @Html.TextBoxFor(m => m.LevelUpto, new { type = "number", @class = "form-control", autocomplete = "off" })
+                                </div>
+                            </div>
+
+                        <div class="row mb-4">
+                            <div class="col-sm-4">
+                                <label for="AutoInApproval" style="display: block; margin-bottom: 5px;">Auto in Approval:</label>
+                            </div>
+                            <div class="col-sm-8 text-secondary">
+                                @Html.CheckBoxFor(m => m.AutoInApproval, new { @class = "form-check-input" })
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-sm-4">
+                                <label for="Hierarchy" style="display: block; margin-bottom: 5px;">Hierarchy:</label>
+                            </div>
+                            <div class="col-sm-4 text-secondary">
+                                @Html.TextBoxFor(m => m.Hierarchy, new { type = "number", step = "0.01", @class = "form-control", autocomplete = "off" })
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <span class="ModalView" style="display:none">
+                <button type="submit" id="SaveRoleMaster" name="SaveRoleMaster" class="btn btn-success"><i class="fas fa-save"></i>&nbsp; Submit</button>
+                </span>
+                <a href="javascript:;" id="CloseRoleMaster" class="btn btn-warning"><i class="mdi mdi-close"></i>&nbsp; Close</a>
+                </div>
+            }
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+@section dateScript
+{
+    <!--plugins-->
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+   
+
+}
+
+
+<script src="~/js/RoleMaster.js"></script>
+
+<script>
+    window.onload = (function () {
+
+        var abc = '@TempData["MSG"]';
+        if (abc == "success") {
+            swal.fire("Done", "Record Save SuccessFully !!", "success");
+
+        }
+        else if (abc == "fail") {
+            swal.fire("Oppss!!!", "Please Contact Admin", "error");
+        }
+
+
+    });
+
+</script>
+
+<script>
+
+    $('#CloseRoleMaster').click(function () {
+
+        window.location.reload();
+    });
+
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "pageLength": 10
+        });
+
+    });
+
+</script>

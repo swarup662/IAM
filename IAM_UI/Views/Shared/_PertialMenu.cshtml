@@ -1,0 +1,177 @@
+﻿@using System.Text
+@using IAM_UI.Helpers
+@using Microsoft.AspNetCore.Html
+@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Http
+@model List<MenuModel>
+
+<style>
+    /* Main horizontal menu styles */
+    .menuH {
+        margin: 0;
+        width: 100%;
+        float: left;
+        height: 30px;
+        background: #f3d987 repeat-x 0 0;
+        border: 1px solid #BBB;
+        position: relative;
+        font-family: Arial, Helvetica, sans-serif;
+        list-style: none;
+        padding: 0;
+        clear: both;
+        border-radius: 5px;
+    }
+
+    /* Reset user-agent stylesheet ul margin and padding */
+    ul {
+        display: block;
+        list-style-type: none; /* Remove bullets */
+        margin-block-start: 0;
+        margin-block-end: 0;
+        padding-inline-start: 0;
+    }
+
+    /* Navbar styles */
+    .navbar-nav .nav-item {
+        position: relative;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 12px;
+        font-weight: bold;
+        color: black;
+        text-decoration: none;
+        display: block;
+        padding: 10px 15px; /* Adjust padding for better spacing */
+        outline: 0; /* Remove outline on focus */
+    }
+
+    /* Dropdown menu styles */
+    .dropdown-menu {
+        min-width: 200px;
+        position: absolute;
+        display: none; /* Initially hidden */
+    }
+
+        .dropdown-menu.show {
+            display: block; /* Display when shown */
+        }
+
+    /* Hover styles for dropdowns */
+    .nav-item:hover > .dropdown-menu {
+        display: block;
+    }
+
+    /* Hover effect for links */
+    .menuH ul :hover {
+        color: red;
+    }
+
+    /* Add arrow on menu items with children */
+    .menuH ul a.arrow {
+        background: url('/path/to/right.gif') no-repeat 97% center;
+    }
+
+    /* Styles for nested dropdowns */
+    .dropdown-menu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+    }
+
+    /* Style adjustments for nested dropdowns */
+    .dropdown-item:hover .dropdown-menu {
+        display: block;
+    }
+</style>
+
+@{
+    // Build the menu tree with distinct ModuleNames
+    List<MenuModel> BuildMenuTree(List<MenuModel> items)
+    {
+        var distinctItems = items
+            .GroupBy(x => new { x.ModuleName, x.ModuleId, x.ModuleParentId, x.ModuleLink })
+            .Select(g => g.First())
+            .ToList();
+
+        var lookup = distinctItems.ToLookup(x => x.ModuleParentId);
+        var rootItems = distinctItems.Where(x => x.ModuleTypeId == 100).ToList(); // Root items where ModuleParentId is 1
+
+        foreach (var item in rootItems)
+        {
+            AddChildren(item, lookup);
+        }
+
+        return rootItems;
+    }
+
+    void AddChildren(MenuModel parent, ILookup<int, MenuModel> lookup)
+    {
+        foreach (var child in lookup[parent.ModuleId])
+        {
+            parent.Children.Add(child);
+            AddChildren(child, lookup);
+        }
+    }
+    var menuList = ViewBag.menuItems as List<MenuModel>;
+    var menuItems = BuildMenuTree(menuList);
+    ViewContext.HttpContext.Session.SetString("menuItems", JsonConvert.SerializeObject(menuList));
+
+    // Retrieve session data (if needed)
+    var sessionMenuList = JsonConvert.DeserializeObject<List<MenuModel>>(ViewContext.HttpContext.Session.GetString("menuItems"));
+
+}
+
+
+<div id="sidebar-menu">
+    <ul id="side-menu">
+        @foreach (var item in menuItems)
+        {
+            @RenderMenuItem(item)
+        }
+    </ul>
+</div>
+
+@functions {
+    private IHtmlContent RenderMenuItem(MenuModel item)
+    {
+        var sb = new StringBuilder();
+        var hasChildren = item.Children.Any();
+
+        if (hasChildren)
+        {
+            // Create a unique ID for the collapse element
+            var collapseId = $"sidebar{item.ModuleName.Replace(" ", "")}";
+
+            sb.AppendLine("<li>");
+            sb.AppendLine($"<a href=\"#{collapseId}\" data-bs-toggle=\"collapse\">");
+            sb.AppendLine($"<i class=\"fe-menu\"></i>");
+            sb.AppendLine($"<span> {item.ModuleName} </span>");
+            sb.AppendLine("<span class=\"menu-arrow\"></span>");
+            sb.AppendLine("</a>");
+            sb.AppendLine($"<div class=\"collapse\" id=\"{collapseId}\">");
+            sb.AppendLine("<ul class=\"nav-second-level\">");
+
+            foreach (var child in item.Children)
+            {
+                sb.AppendLine(RenderMenuItem(child).ToString());
+            }
+
+            sb.AppendLine("</ul>");
+            sb.AppendLine("</div>");
+            sb.AppendLine("</li>");
+        }
+        else
+        {
+            sb.AppendLine("<li>");
+            sb.AppendLine($"<a href=\"{item.ModuleLink}\" data-moduleid=\"{item.ModuleId}\">");
+            sb.AppendLine($"<i class=\"fe-menu\"></i>");
+            sb.AppendLine($"<span> {item.ModuleName} </span>");
+            sb.AppendLine("</a>");
+            sb.AppendLine("</li>");
+        }
+
+        return new HtmlString(sb.ToString());
+
+    }
+}

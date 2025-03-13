@@ -1,0 +1,165 @@
+﻿@model IAM_UI.Models.SaasBillingEmpModel
+@{
+    ViewBag.Title = "Saas Billing Information";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    /* Container-specific loader overlay */
+    .loader-overlay {
+        position: absolute; /* Position relative to the container */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Semi-transparent background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    /* Loader design */
+    .loader {
+        color: black; /* Set spinner and text color */
+        background-color: rgba(128, 128, 128, 0.5);
+        width: 200px;
+        height: 105px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        border-radius: 10px;
+    }
+
+    .span {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+
+    .loader .spinner-border {
+        width: 50px;
+        height: 50px;
+        border-width: 6px;
+        border-color: #43BEE1 transparent #43BEE1 transparent; /* Spinner color */
+    }
+
+    .loader p {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+</style>
+
+
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-10">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style="padding-bottom: 1px; padding-top: 1px; box-shadow: 2px 2px 5px Gray">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Report</a></li>
+                                <li class="breadcrumb-item active">1st day of the month</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">SAAS BILLING INFORMATION</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <div class="card border-top border-0 border-4 border-info">
+                <div class="card-body" style=" box-shadow: 2px 2px 5px Gray">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row mb-2">
+                                <div class="col-sm-8">
+                                    <div class="text-sm-end">
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Import</button>
+                                        <button type="button" style="display:none" class="btn btn-info mb-2 me-1">Export Pdf</button>
+                                        <button type="button" style="display:none" class="btn btn-blue mb-2 me-1">Export Excel</button>
+                                        <button type="button" style="display:none" class="btn btn-primary mb-2 me-1">Print</button>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            @*    <button type="button" class="btn btn-primary waves-effect waves-light mb-2" id="RefreshModel"><i class="mdi mdi-cloud-refresh me-2"></i> Refresh</button> *@
+
+
+                            <div class="row mt-1">
+
+                                <div class=" col-md-3 ms-4">
+                                    <button type="button" id="_saasPrint" class="btn btn-info mb-2 ms-1" style="color:white;background-color:#0078d7"><i class="fas fa-print me-1"></i>Print</button>
+                                </div>
+                                <div id="loader" class="loader-overlay" style="display: none;">
+                                    <div class="loader">
+                                        <div class="spinner-border text-primary" role="status">
+                                        </div>
+                                        <div class="span">Loading...</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section dateScript
+{
+    <!--plugins-->
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
+
+}
+
+<script src="~/js/SaasBillingEmployee.js"></script>
+
+<script>
+    window.onload = (function () {
+
+        var abc = '@TempData["MSG"]';
+        if (abc == "success") {
+            swal.fire("Done", "Record Save SuccessFully !!", "success");
+
+        }
+        else if (abc == "exist") {
+                        swal.fire("Exist", "Record Already Exist !!", "error");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 4000);
+                    }
+        else if (abc == "fail") {
+            swal.fire("Oppss!!!", "Please Contact Admin", "error");
+        }
+
+
+    });
+
+</script>
+
+
+

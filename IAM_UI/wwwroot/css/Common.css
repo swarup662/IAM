@@ -1,0 +1,639 @@
+﻿
+
+.page-content {
+    font-size: 12px
+}
+
+.form-control {
+    font-size: 12px;
+    height: 29px;
+    background-color: rgb(244, 246, 247);
+    width: 85%;
+}
+
+.form-select {
+    font-size: 12px;
+    height: 29px;
+    background-color: rgb(244, 246, 247);
+    width: 85%;
+} 
+
+.modal-content {
+    backdrop-filter: blur(10px);
+    border: 2px solid rgb(0, 148, 255);
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust the alpha value to control transparency */
+}
+
+.modal-header {
+    background: linear-gradient(45deg, #007bff, #00d4ff);
+    /* Adjust the alpha value to control transparency */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-title {
+    font-size: 16px;
+    color: white;
+}
+
+.btn-close {
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.form-group label {
+    font-weight: 200;
+    font-size:12px
+}
+
+.bg-primary {
+    border-radius: 20px;
+    padding: 5px 20px;
+    border: none;
+    color: white;
+    box-shadow: 2px 2px 5px Gray;
+}
+
+.bg-danger {
+    border-radius: 20px;
+    padding: 5px 20px;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 5px Gray;
+}
+.btn_Print {
+    border-radius: 20px;
+    padding: 5px 20px;
+    color: white;
+    background: linear-gradient(45deg, #b8860b, #8b7500);
+    border: none;
+    box-shadow: 2px 2px 5px Gray;
+}
+.AddButton {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px Gray;
+    height: 40px;
+    width: 125px
+}
+
+.RefreshModel {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px Gray;
+    height: 40px;
+    width: 125px
+}
+
+
+.AddButton {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px Gray;
+    height: 40px;
+    width: 125px
+}
+
+.RefreshModel {
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px Gray;
+    height: 40px;
+    width: 125px
+}
+
+.AddItem, .AddService, .Submit {
+    border-radius: 20px;
+    background: linear-gradient(45deg, #447a24, #6fb748);
+    font-size: 13px;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 5px Gray;
+}
+
+.Search {
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+.AddItem, .AddQuoteItem, .AddTerm {
+    border-radius: 20px;
+    background: linear-gradient(45deg, #447a24, #6fb748);
+    font-size: 13px;
+    color: white;
+    border: none;
+    box-shadow: 2px 2px 5px Gray;
+}
+
+table td, table th {
+    border: 1px solid var(--bs-border-color) !important;
+ text-align: center;
+}
+.table{
+    font-size:14px;
+}
+
+
+
+
+
+
+.nav-pills .nav-link {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav-pills .nav-link.active {
+    background: linear-gradient(45deg, #007bff, #00d4ff);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-pills .nav-link .d-flex {
+    align-items: center;
+}
+
+.nav-pills .nav-link .tab-title {
+    font-weight: 200;
+    font-size: 1.1em;
+}
+
+.tab-content {
+    margin-top: 13px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pills-tabContent {
+    border: solid #808080 2px;
+    border-radius: 10px;
+}
+
+.TabBody {
+    border: solid gray 2px;
+    border-radius: 10px;
+}
+
+
+
+
+.title {
+    font-size: 26px;
+    float: left;
+    width: 78%;
+    padding-left: 18px;
+    clear: right;
+}
+    .title a {
+        color: #366082;
+        font-family: 'Belgrano', serif;
+    }
+
+#welcome_txt {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+.header_right {
+    float: left;
+    padding: 23px 0 0 0;
+    font-size: 15px;
+    width: 20%;
+    margin-bottom: 27px;
+}
+
+    .header_right a.logout {
+        background: url('../images/logout.png') no-repeat left;
+        padding: 0 0 0 18px;
+        float: right;
+    }
+
+    .header_right a.settings {
+        background: url('../images/reverse.png') no-repeat left;
+        padding: 0 0 0 25px;
+    }
+
+    .header_right a {
+        margin: 0 0 0 8px;
+        color: #000000;
+        font-weight: bold;
+        float: left;
+    }
+
+
+
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #ffffff, #e0e0e0); /* White to gray gradient */
+    padding: 5px 15px; /* Adjusted padding for a narrow navbar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjusted shadow for a narrower design */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Thinner bottom border */
+    border: 1px solid #BBB;
+}
+
+.welcome-text {
+    font-size: 18px; /* Adjusted font size for a narrower navbar */
+    font-weight: 600; /* Slightly lighter weight for a modern feel */
+    color: #333333; /* Darker text color for better contrast */
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+    letter-spacing: 0.5px; /* Slight letter spacing */
+}
+
+
+
+
+
+
+
+
+
+.menuH {
+    margin: 0;
+    padding-top: 4px;
+    padding-bottom: 6px;
+    list-style: none;
+    color: black;
+    background: linear-gradient(to right, #f3d987 0%, #f3d987 60%, #ffffff 100%);
+    border: 1px solid #bbb;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px, rgba(0, 0, 0, 0.12) 0px 1px 2px;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+    .menuH > li {
+        display: inline-block;
+        position: relative;
+    }
+
+        .menuH > li > a {
+            padding: 0 20px;
+            line-height: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+            display: block;
+            border-radius: 20px;
+            outline: 0;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s;
+        }
+
+            .menuH > li > a:hover,
+            .menuH > li > a.selected {
+                background: white; /* Change background to light gray on hover */
+                color: red; /* Change font color to red on hover */
+            }
+
+    .menuH ul {
+        position: absolute;
+        display: none;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background: white;
+        border: 1px solid #BBB;
+        border-radius: 5px;
+        z-index: 1000;
+        min-width: 200px;
+        box-shadow: rgb(0 0 0 / 42%) 0px 4px 8px; /* Added box-shadow for submenus */
+    }
+
+        .menuH ul li {
+            display: block;
+            position: relative;
+            font-size: 12px;
+            margin: 0; /* Remove margin from top-level items */
+            font-weight: bold;
+        }
+
+            .menuH ul li a {
+                display: block;
+                padding: 4px 6px;
+                text-decoration: none;
+                color: black;
+                transition: background 0.3s, color 0.3s;
+                border-radius: 20px;
+                margin-top: 5px;
+            }
+
+                .menuH ul li a:hover {
+                    background: #f3d987; /* Change background to light gray on hover */
+                    color: red; /* Change font color to red on hover */
+                    margin-bottom: 5px;
+                }
+
+        .menuH ul ul {
+            top: 0;
+            left: 100%;
+            
+        }
+
+            .menuH ul ul li {
+                margin-top: 5px; /* Remove gap */
+            }
+
+    .menuH li:hover > ul {
+        display: block;
+    }
+
+
+
+    /* Additional styling for arrows */
+    .menuH .arrow:after {
+        content: ' ►';
+        float: right;
+    }
+
+    /* Hover effect for deeper levels */
+    .menuH ul ul li a {
+        background: white; /* Background for sub-menus */
+        color: black;
+    }
+
+        .menuH ul ul li a:hover {
+            background: #f3d987; /* Change background to light gray on hover for sub-menus */
+            color: red; /* Change font color to red on hover for sub-menus */
+        }
+
+/* Admin Dropdown Styles */
+.admin-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.admin-toggle {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    background: #f3d987;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+    white-space: nowrap;
+}
+
+    .admin-toggle:hover {
+        background: white;
+        color: #f3d987;
+        border-color: #f3d987;
+    }
+
+    .admin-toggle .arrow {
+        margin-left: 12px;
+        transition: transform 0.3s ease;
+    }
+
+/* Admin Menu Styles */
+.admin-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 220px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 6px 12px;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.admin-dropdown:hover .admin-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Menu Items Styling */
+.admin-menu li {
+    margin: 0;
+}
+
+    .admin-menu li a {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: #333;
+        transition: background 0.3s, color 0.3s;
+        font-size: 14px;
+    }
+
+        .admin-menu li a:hover {
+            background: #f3d987;
+            color: #333;
+            border-radius: 8px;
+        }
+
+    .admin-menu li svg {
+        margin-right: 12px;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+    }
+
+/* Divider styling */
+.admin-menu .divider {
+    height: 1px;
+    background: #eee;
+    margin: 8px 0;
+}
+
+/* Rotate the arrow when the menu is open */
+.admin-dropdown:hover .admin-toggle .arrow {
+    transform: rotate(180deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the entire navbar horizontally */
+    padding: 0;
+    width: 100%; /* Ensure it takes full width */
+    background: linear-gradient(to right, #f3d987 0%, #f3d987 40%, #ffffff 100%);
+}
+
+    .navbar-custom .container {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center the content inside the container */
+        width: 100%; /* Ensure it takes full width */
+    }
+
+    .navbar-custom .title {
+        font-family: 'Roboto', sans-serif; /* Modern, clean font */
+        font-weight: 600; /* Bolder for better readability */
+        color: black; /* Text color */
+        text-align: center; /* Center the text inside the div */
+        width: 100%; /* Take the full width to center the text properly */
+        
+    }
+
+    .navbar-custom .topnav-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center; /* Center the nav links and title within the navbar */
+        width: 100%; /* Ensure it takes full width */
+        padding: 0;
+        margin: 0;
+        list-style: none; /* Remove default list styles if it's an ul or ol */
+    }
+
+   
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    .content {
+        text-align: left; /* Align text to the left */
+    }
+
+    h5 {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+.content {
+    text-align: left;
+    padding-left: 10px; /* Adjust as needed */
+}
+
+
+
+/* Container for card layout */
+#applicationsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Row styling */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem; /* Adjust spacing between columns */
+}
+
+/* Column styling */
+.col-md-4 {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+    padding: 0 0.5rem; /* Adjust spacing between columns */
+}
+
+/* Card styling */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    color: #fff; /* Ensure text color contrasts with card background */
+    height: 150px; /* Fixed height */
+    width: 100%; /* Full width of column */
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        background-color: #28a745; /* Green color for hover effect */
+    }
+
+.card-content {
+    padding: 1rem;
+    height: 100%; /* Ensure content fits the card height */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content */
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+/* Card background colors */
+.bg-primary {
+    background-color: #007bff; /* Blue color */
+}
+
+.bg-secondary {
+    background-color: #6c757d; /* Gray color */
+}
+
+.card-link {
+    display: block;
+    color: inherit; /* Ensure the link text inherits card color */
+    text-decoration: none;
+}

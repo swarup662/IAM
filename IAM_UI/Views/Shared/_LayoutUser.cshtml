@@ -163,6 +163,7 @@
                 $("span.Add").empty();
             } else if (flatActions.indexOf("Add") >= 0) {
                 $("span.Add").show();
+                 $("span.ModalView").show();
             }
 
             if (flatActions.indexOf("Delete") === -1) {
@@ -211,8 +212,42 @@
          $("span.ModalView").show();
           }
 
+
+
+
+
+
+
+
+            // List of allowed controller-action combinations
+            var allowedRoutes = [
+                "Home/Dashboard",
+                "EncodeDecode/Index",
+                "Home/Unauthorized",
+                "It/RoleWiseApplication"
+            ]; // Add more as needed
+
+            function checkAndRedirect() {
+                if (!flatActions || flatActions.length === 0) {
+                    var pathSegments = window.location.pathname.split('/').filter(x => x); // Remove empty segments
+                    var currentRoute = pathSegments.length >= 2 ? pathSegments[0] + "/" + pathSegments[1] : "";
+
+                    // Check if there is a query string in the URL
+                    var hasQueryString = window.location.search.length > 0;
+
+                    // Redirect only if the current route is NOT in the allowed list and there's NO query string
+                    if (!allowedRoutes.includes(currentRoute) && !hasQueryString) {
+                        window.location.href = "/Home/Unauthorized"; // Redirect to home dashboard
+                    }
+                }
+            }
+
+            checkAndRedirect();
         });
 
+     
+
+       
 
     </script>
 

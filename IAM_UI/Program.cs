@@ -1,4 +1,4 @@
-using CommonUtility.Interface;
+﻿using CommonUtility.Interface;
 using CommonUtility.Repository;
 using IAM_UI;
 using IAM_UI.Controllers;
@@ -6,9 +6,22 @@ using IAM_UI.Helpers;
 using IAM_UI.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
+
+using Microsoft.AspNetCore.Diagnostics;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using Microsoft.AspNetCore.HttpOverrides;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpContextAccessor(); // ✅ Required for TempData access
+builder.Services.AddControllersWithViews(options =>
+{
+    // Register the Global Exception Filter
+    options.Filters.Add<GlobalExceptionFilter>();
+});
 
 builder.Services.AddMemoryCache();
 
@@ -17,11 +30,13 @@ builder.Services.AddTransient<UserAuth>();
 builder.Services.AddTransient<LayoutProcessor>();
 builder.Services.AddTransient<HomeController>();
 builder.Services.AddTransient<UsersForBillingApiTrackerUIController>();
+builder.Services.AddScoped<GlobalExceptionFilter>();
 
 
 builder.Services.AddHttpClient();
-// Add services to the container
-builder.Services.AddControllersWithViews();
+
+
+//builder.Services.AddControllersWithViews();
 
 // Register services
 builder.Services.AddScoped<IEncryptDecrypt, EncryptDecryptRepository>();
@@ -31,9 +46,12 @@ builder.Services.AddScoped<UsersForBillingApiTrackerUI>();
 builder.Services.AddScoped<APIResultsValue>();
 builder.Services.AddScoped<EncodeDecodeController>();
 
+
 // Register custom logger service (FileLoggerRepository)
 // Register custom logger service (FileLoggerRepository)
 string logDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+
+
 builder.Services.AddScoped<ILoggerService>(provider => new FileLoggerRepository(logDirectory));
 
 // Bind the TrustedHosts section to TrustedHostsOptions
@@ -41,6 +59,8 @@ builder.Services.Configure<TrustedHostsOptions>(builder.Configuration.GetSection
 
 // Add in-memory caching services
 builder.Services.AddDistributedMemoryCache(); // This is necessary for session management
+
+
 
 
 builder.Services.AddSession(options =>
@@ -61,14 +81,24 @@ builder.Services.AddCors(options =>
         });
 });
 var app = builder.Build();
-    app.UseCors("AllowAll");
 
-    // Configure the HTTP request pipeline
-    if (!app.Environment.IsDevelopment())
+
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
+app.UseExceptionHandler("/Home/Error");
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Auth/Error");
-    app.UseHsts();
+    app.UseExceptionHandler("/Home/Error"); // Redirect to Error action in Home controller
+    app.UseHsts(); // Enforce HTTPS // Detailed error page in development
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error"); // Redirect to Error action in Home controller
+    app.UseHsts(); // Enforce HTTPS
+}
+
+
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

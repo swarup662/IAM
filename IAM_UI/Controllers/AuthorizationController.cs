@@ -23,7 +23,7 @@ namespace IAM_UI.Controllers
     public class AuthorizationController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ILoggerService _logger;
+     
         private readonly EncodeDecodeController encdec;
         private readonly string _baseUrlGlobal;
         private readonly ICommonService _commonService;
@@ -37,14 +37,14 @@ namespace IAM_UI.Controllers
         private readonly APIResultsValue _apirelultvalues;
         private readonly string BaseUrlAllModule;
 
-        public AuthorizationController(IConfiguration configuration, ICommonService commonService, ILoggerService logger, IGlobalModelService globalModelService, APIResultsValue apirelultvalues, EncodeDecodeController EncDnc)
+        public AuthorizationController(IConfiguration configuration, ICommonService commonService, IGlobalModelService globalModelService, APIResultsValue apirelultvalues, EncodeDecodeController EncDnc)
         {
             _configuration = configuration;
             _baseUrlGlobal = configuration["BaseUrlGlobal"];
             _commonService = commonService;
             _ApiKey = configuration["Apikey"];
             _MailBody = configuration["MailBody"];
-            _logger = logger;
+ 
             BaseUrlAuth = configuration["BaseUrlAuth"];
             BaseUrlPers = configuration["BaseUrlPersonnel"];
 
@@ -1445,6 +1445,7 @@ namespace IAM_UI.Controllers
         {
             try
             {
+
                 GlobalModel gm = _globalModelService.InitializeGlobalModel(HttpContext);
                 var ApprovalTag = HttpContext.Request.Query["Approve"].ToString();
                 object result = "";
@@ -1522,6 +1523,7 @@ namespace IAM_UI.Controllers
         {
             try
             {
+              
                 GlobalModel gm = _globalModelService.InitializeGlobalModel(HttpContext);
 
 
@@ -1584,6 +1586,7 @@ namespace IAM_UI.Controllers
         //EDIT function
         public async Task<IActionResult> FetchRoleMasterID(int id)
         {
+            
             GlobalModel gm = _globalModelService.InitializeGlobalModel(HttpContext);
             string urlParameters = "GetRoleByID/";
             using (var httpClient = new HttpClient())
@@ -1618,6 +1621,7 @@ namespace IAM_UI.Controllers
         //DELETE function
         public async Task<IActionResult> DeleteRoleByID(int id)
         {
+          
             GlobalModel gm = _globalModelService.InitializeGlobalModel(HttpContext);
             string msg = "";
             string urlParameters = "DeleteRoleMaster/";

@@ -99,6 +99,7 @@
 
 
 
+
     <script>
 
 
@@ -106,7 +107,7 @@
         // Immediately redirect if condition is true
         var redirectCondition = @Html.Raw(Json.Serialize(LoginredirectCondition)); // Pass the C# condition to JavaScript
         var loginUrl = "@loginurl"; // Inject the C# variable loginurl into JavaScript
-
+    
         if (redirectCondition) {
         // Redirect immediately, before rendering any content
         window.location.href = loginUrl;
@@ -116,8 +117,8 @@
     @{
         // Retrieve actions list from the context
         var actions = Context.Items["Actions"] as List<string[]>;
-
-
+    
+      
 
         // Flatten the nested list into a single array
         var flatActions = actions?.SelectMany(a => a).ToList() ?? new List<string>();  // Handle null safely
@@ -125,134 +126,142 @@
 
         //This line is for  wizard type module which have two pages instead of modal
         var ViewClicked = Context.Session.GetString("ViewClicked");
-        var a = 0;
+      
     }
 
     <script>
 
 
-
-
-        // Assuming `ViewBag.approval` is provided in the Razor ViewBag
-
-
-         var ViewClicked = "@ViewClicked"
-
-
         $(document).ready(function () {
-            // Pass the flattened actions list from Razor to JavaScript
-            var flatActions = @Html.Raw(Json.Serialize(flatActions));  // Serialize the C# list to JSON and pass to JS
+            var abc = '@TempData["ExceptionMessage"]';
 
-            // Check if "View" is in the array and handle click
-            $(".View i").click(function () {
-                // Disable the submit button when "View" is clicked
-                $("span.ModalView").empty();
-            });
+            // Get the current URL path
+            var currentPath = window.location.pathname;
 
-            // Reverse the logic: Check if actions do not contain "Edit"
-            if (flatActions.indexOf("Edit") === -1) {
-                // If "Edit" is not in the array, empty the <span> tag with class "Edit"
-                $("span.Edit").empty();
-            } else if (flatActions.indexOf("Edit") >= 0) {
-                $("span.Edit").show();
-                 $("span.ModalView").show();
+            // Trim whitespace and check if abc is not empty, and ensure the URL is not "/Home/Error"
+            if (abc && abc.trim() && currentPath !== "/Home/Error") {
+                Swal.fire("Error", abc, "error");
             }
-
-            if (flatActions.indexOf("Add") === -1) {
-                // If "Add" is not in the array, empty the <span> tag with class "Add"
-                $("span.Add").empty();
-            } else if (flatActions.indexOf("Add") >= 0) {
-                $("span.Add").show();
-                 $("span.ModalView").show();
-            }
-
-            if (flatActions.indexOf("Delete") === -1) {
-                // If "Delete" is not in the array, empty the <span> tag with class "Delete"
-                $("span.Delete").empty();
-            } else if (flatActions.indexOf("Delete") >= 0) {
-                $("span.Delete").show();
-            }
-
-            if (flatActions.indexOf("View") === -1) {
-                // If "View" is not in the array, empty the <span> tag with class "View"
-                $("span.View").empty();
-            } else if (flatActions.indexOf("View") >= 0) {
-                $("span.View").show();
-            }
-
-            if (flatActions.indexOf("Print") === -1) {
-                // If "Print" is not in the array, empty the <span> tag with class "Print"
-                $("span.Print").empty();
-            } else if (flatActions.indexOf("Print") >= 0) {
-                $("span.Print").show();
-            }
-
-            if (flatActions.indexOf("Approve") === -1) {
-                // If "Approve" is not in the array, empty the <span> tag with class "Approve"
-                $(".Approve").empty();
-                $(".Approve").css("display", "none");
-            }
-            else if (flatActions.indexOf("Approve") >= 0) {
-                $(".Approve").show();
-            }
-
-          if (ViewClicked === "View")
-         {
-
-        $("span.ModalView").empty();
-          }
-          else if (ViewClicked === "Edit")
-         {
-
-         $("span.ModalView").show();
-          }
-            else if (ViewClicked === "Add")
-         {
-
-         $("span.ModalView").show();
-          }
-
-
-
-
-
-
-
-
-            // List of allowed controller-action combinations
-            var allowedRoutes = [
-                "Home/Dashboard",
-                "EncodeDecode/Index",
-                "Home/Unauthorized",
-                "It/RoleWiseApplication"
-            ]; // Add more as needed
-
-            function checkAndRedirect() {
-                if (!flatActions || flatActions.length === 0) {
-                    var pathSegments = window.location.pathname.split('/').filter(x => x); // Remove empty segments
-                    var currentRoute = pathSegments.length >= 2 ? pathSegments[0] + "/" + pathSegments[1] : "";
-
-                    // Check if there is a query string in the URL
-                    var hasQueryString = window.location.search.length > 0;
-
-                    // Redirect only if the current route is NOT in the allowed list and there's NO query string
-                    if (!allowedRoutes.includes(currentRoute) && !hasQueryString) {
-                        window.location.href = "/Home/Unauthorized"; // Redirect to home dashboard
-                    }
-                }
-            }
-
-            checkAndRedirect();
         });
 
-     
 
-       
+        var ViewClicked = "@ViewClicked"
+
+            var ViewPage = "@ViewBag.ErrorView"
+        $(document).ready(function () {
+        // Pass the flattened actions list from Razor to JavaScript
+        var flatActions = @Html.Raw(Json.Serialize(flatActions));  // Serialize the C# list to JSON and pass to JS
+
+        // Check if "View" is in the array and handle click
+        $(".View i").click(function () {
+        // Disable the submit button when "View" is clicked
+        $("span.ModalView").empty();
+        });
+
+        // Reverse the logic: Check if actions do not contain "Edit"
+        if (flatActions.indexOf("Edit") === -1) {
+        // If "Edit" is not in the array, empty the <span> tag with class "Edit"
+        $("span.Edit").empty();
+        } else if (flatActions.indexOf("Edit") >= 0) {
+        $("span.Edit").show();
+        $("span.ModalView").show();
+        }
+
+        if (flatActions.indexOf("Add") === -1) {
+        // If "Add" is not in the array, empty the <span> tag with class "Add"
+        $("span.Add").empty();
+        } else if (flatActions.indexOf("Add") >= 0) {
+        $("span.Add").show();
+        $("span.ModalView").show();
+        }
+
+        if (flatActions.indexOf("Delete") === -1) {
+        // If "Delete" is not in the array, empty the <span> tag with class "Delete"
+        $("span.Delete").empty();
+        } else if (flatActions.indexOf("Delete") >= 0) {
+        $("span.Delete").show();
+        }
+
+        if (flatActions.indexOf("View") === -1) {
+        // If "View" is not in the array, empty the <span> tag with class "View"
+        $("span.View").empty();
+        } else if (flatActions.indexOf("View") >= 0) {
+        $("span.View").show();
+        }
+
+        if (flatActions.indexOf("Print") === -1) {
+        // If "Print" is not in the array, empty the <span> tag with class "Print"
+        $("span.Print").empty();
+        } else if (flatActions.indexOf("Print") >= 0) {
+        $("span.Print").show();
+        }
+
+        if (flatActions.indexOf("Approve") === -1) {
+        // If "Approve" is not in the array, empty the <span> tag with class "Approve"
+        $(".Approve").empty();
+        $(".Approve").css("display", "none");
+        }
+        else if (flatActions.indexOf("Approve") >= 0) {
+        $(".Approve").show();
+        }
+
+        if (ViewClicked === "View")
+        {
+
+        $("span.ModalView").empty();
+        }
+        else if (ViewClicked === "Edit")
+        {
+
+        $("span.ModalView").show();
+        }
+        else if (ViewClicked === "Add")
+        {
+
+        $("span.ModalView").show();
+        }
+
+
+
+
+
+
+
+
+        // List of allowed controller-action combinations
+        var allowedRoutes = [
+        "Home/Dashboard",
+        "EncodeDecode/Index",
+        "Home/Unauthorized",
+        "It/RoleWiseApplication",
+        "Home/Error"
+        ]; // Add more as needed
+
+        function checkAndRedirect() {
+        if (!flatActions || flatActions.length === 0) {
+        var pathSegments = window.location.pathname.split('/').filter(x => x); // Remove empty segments
+        var currentRoute = pathSegments.length >= 2 ? pathSegments[0] + "/" + pathSegments[1] : "";
+
+        // Check if there is a query string in the URL
+        var hasQueryString = window.location.search.length > 0;
+
+        // Redirect only if the current route is NOT in the allowed list and there's NO query string
+        if (!allowedRoutes.includes(currentRoute) && !hasQueryString) {
+        window.location.href = "/Home/Unauthorized"; // Redirect to home dashboard
+        }
+        }
+        }
+
+        checkAndRedirect();
+        });
+
+
+
 
     </script>
 
 
-  
+
 
 </head>
 
@@ -273,23 +282,23 @@
                         if (UserDetail.UserCategoryId !=1){
 
 
-                    <ul class="dropdown list-unstyled topnav-menu float-end mb-0">
-                        <!-- Notification Icon -->
-                        <li class="dropdown notification-list">
-                            <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
-                                <i class="fe-settings noti-icon"></i>
-                            </a>
-                        </li>
-                    </ul>
+                            <ul class="dropdown list-unstyled topnav-menu float-end mb-0">
+                                <!-- Notification Icon -->
+                                <li class="dropdown notification-list">
+                                    <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
+                                        <i class="fe-settings noti-icon"></i>
+                                    </a>
+                                </li>
+                            </ul>
 
-                    }
+                        }
                     }
 
                     <!-- Admin Dropdown -->
                     <ul class="list-unstyled topnav-menu float-end mb-0">
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
-                               data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="pro-user-name ms-1">
                                     @if (UserDetail != null)
                                     {
@@ -297,7 +306,7 @@
 
                                         <i class="mdi mdi-chevron-down"></i>
                                     }
-                                 
+
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end profile-dropdown">
@@ -365,9 +374,9 @@
 
 
             <!--- Sidemenu -->
-           @if( !string.IsNullOrEmpty(loginData)){
-             <Partial name="_PertialMenu" /> 
-           }
+            @if( !string.IsNullOrEmpty(loginData)){
+                <Partial name="_PertialMenu" /> 
+            }
             <!-- End Sidebar -->
             <!-- Sidebar -left -->
 
@@ -434,10 +443,10 @@
                                     var isChecked = Company.CompanyId == ViewBag.CompanyId;
                                     <div class="form-check form-switch mb-1">
                                         <input type="radio"
-                                               class="form-check-input"
-                                               name="CompanyItems"
-                                               value="@Company.CompanyId"
-                                               id="companyitem-@Company.CompanyId"
+                                        class="form-check-input"
+                                        name="CompanyItems"
+                                        value="@Company.CompanyId"
+                                        id="companyitem-@Company.CompanyId"
                                         @(isChecked ? "checked" : "") />
                                         <label class="form-check-label" for="companyitem-@Company.CompanyId">@Company.COMPANY_NAME</label>
                                     </div>
@@ -455,10 +464,10 @@
                                     var isChecked = userType.UserTypeId == ViewBag.UsertypeId;
                                     <div class="form-check form-switch mb-1">
                                         <input type="radio"
-                                               class="form-check-input"
-                                               name="userTypeIds"
-                                               value="@userType.UserTypeId"
-                                               id="userType-@userType.UserTypeId"
+                                        class="form-check-input"
+                                        name="userTypeIds"
+                                        value="@userType.UserTypeId"
+                                        id="userType-@userType.UserTypeId"
                                         @(isChecked ? "checked" : "") />
                                         <label class="form-check-label" for="userType-@userType.UserTypeId">@userType.UserType</label>
                                     </div>
@@ -506,95 +515,95 @@
 
 <script>
 
-   
+
 
 
 
 
 
     $('#CompanyItems input[type="radio"]').on('change', function () {
-        // Capture the selected values
-        var selectedCompany = $(this).val();
-        var selectedUserType = $('#userTypeForm input[name="userTypeIds"]:checked').val();
+    // Capture the selected values
+    var selectedCompany = $(this).val();
+    var selectedUserType = $('#userTypeForm input[name="userTypeIds"]:checked').val();
 
-        // Ensure both values are selected
-        if (selectedCompany && selectedUserType) {
-            // Call the C# method via GET
-            $.get('/Home/ChangeCompanyUserType', {
-                companyId: selectedCompany,     // First parameter
-                userTypeId: selectedUserType    // Second parameter
-            }, function (response) {
-                // Handle success
-                console.log(response.message);
-                if (response.message === 'success') {
-                    window.location.href = '/Home/Dashboard';
-                    //swal.fire("Error", "Rompany & Role changed successfully!!", "success");
+    // Ensure both values are selected
+    if (selectedCompany && selectedUserType) {
+    // Call the C# method via GET
+    $.get('/Home/ChangeCompanyUserType', {
+    companyId: selectedCompany,     // First parameter
+    userTypeId: selectedUserType    // Second parameter
+    }, function (response) {
+    // Handle success
+    console.log(response.message);
+    if (response.message === 'success') {
+    window.location.href = '/Home/Dashboard';
+    //swal.fire("Error", "Rompany & Role changed successfully!!", "success");
 
 
-                } else {
-                    swal.fire("Error", "please contact admin !!", "error");
-                }
-            }).fail(function (xhr, status, error) {
-                // Handle AJAX request failure
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Request Failed',
-                    text: 'There was an error processing your request.',
-                    showConfirmButton: true
-                });
-            });
-        } else {
-            // Handle case when either company or user type is missing
-            Swal.fire({
-                icon: 'error',
-                title: 'Missing Data',
-                text: 'Please select both company and user type.',
-                showConfirmButton: true
-            });
-        }
+    } else {
+    swal.fire("Error", "please contact admin !!", "error");
+    }
+    }).fail(function (xhr, status, error) {
+    // Handle AJAX request failure
+    Swal.fire({
+    icon: 'error',
+    title: 'Request Failed',
+    text: 'There was an error processing your request.',
+    showConfirmButton: true
+    });
+    });
+    } else {
+    // Handle case when either company or user type is missing
+    Swal.fire({
+    icon: 'error',
+    title: 'Missing Data',
+    text: 'Please select both company and user type.',
+    showConfirmButton: true
+    });
+    }
     });
 
 
     $('#userTypeForm input[type="radio"]').on('change', function () {
-        // Capture the selected values
-        var selectedCompany = $('#CompanyItems input[name="CompanyItems"]:checked').val();
-        var selectedUserType = $(this).val();
+    // Capture the selected values
+    var selectedCompany = $('#CompanyItems input[name="CompanyItems"]:checked').val();
+    var selectedUserType = $(this).val();
 
-        // Ensure both values are selected
-        if (selectedCompany && selectedUserType) {
-            // Call the C# method via GET
-            $.get('/Home/ChangeCompanyUserType', {
-                companyId: selectedCompany,     // First parameter
-                userTypeId: selectedUserType    // Second parameter
-            }, function (response) {
-                // Handle success
-                console.log(response.message);
-                if (response.message === 'success') {
-                    window.location.href = '/Home/Dashboard';
-                    // swal.fire("Error", "Rompany & Role changed successfully!!", "success");
+    // Ensure both values are selected
+    if (selectedCompany && selectedUserType) {
+    // Call the C# method via GET
+    $.get('/Home/ChangeCompanyUserType', {
+    companyId: selectedCompany,     // First parameter
+    userTypeId: selectedUserType    // Second parameter
+    }, function (response) {
+    // Handle success
+    console.log(response.message);
+    if (response.message === 'success') {
+    window.location.href = '/Home/Dashboard';
+    // swal.fire("Error", "Rompany & Role changed successfully!!", "success");
 
 
-                } else {
-                    swal.fire("Error", "please contact admin !!", "error");
-                }
-            }).fail(function (xhr, status, error) {
-                // Handle AJAX request failure
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Request Failed',
-                    text: 'There was an error processing your request.',
-                    showConfirmButton: true
-                });
-            });
-        } else {
-            // Handle case when either company or user type is missing
-            Swal.fire({
-                icon: 'error',
-                title: 'Missing Data',
-                text: 'Please select both company and user type.',
-                showConfirmButton: true
-            });
-        }
+    } else {
+    swal.fire("Error", "please contact admin !!", "error");
+    }
+    }).fail(function (xhr, status, error) {
+    // Handle AJAX request failure
+    Swal.fire({
+    icon: 'error',
+    title: 'Request Failed',
+    text: 'There was an error processing your request.',
+    showConfirmButton: true
+    });
+    });
+    } else {
+    // Handle case when either company or user type is missing
+    Swal.fire({
+    icon: 'error',
+    title: 'Missing Data',
+    text: 'Please select both company and user type.',
+    showConfirmButton: true
+    });
+    }
     });
 
 
@@ -602,39 +611,39 @@
 
 
     function logout() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You will be logged out and all data will be cleared.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, logout!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch('/Home/Logout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json(); // Parse the JSON response
-                        } else {
-                            throw new Error('Logout failed.');
-                        }
-                    })
-                    .then(data => {
-                        // Redirect the user
-                        window.location.href = data.redirectUrl;
-                    })
-                    .catch(error => {
-                        console.error('Error during logout:', error);
-                        Swal.fire('Error', 'There was an error logging you out.', 'error');
-                    });
-            }
-        });
+    Swal.fire({
+    title: 'Are you sure?',
+    text: "You will be logged out and all data will be cleared.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, logout!'
+    }).then((result) => {
+    if (result.isConfirmed) {
+    fetch('/Home/Logout', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+    }
+    })
+    .then(response => {
+    if (response.ok) {
+    return response.json(); // Parse the JSON response
+    } else {
+    throw new Error('Logout failed.');
+    }
+    })
+    .then(data => {
+    // Redirect the user
+    window.location.href = data.redirectUrl;
+    })
+    .catch(error => {
+    console.error('Error during logout:', error);
+    Swal.fire('Error', 'There was an error logging you out.', 'error');
+    });
+    }
+    });
     }
 
 
@@ -810,16 +819,16 @@
 <script>
 
 
-     // Assuming `ViewBag.approval` is provided in the Razor ViewBag
-        var approval = @Html.Raw(Json.Serialize(ViewBag.approval));
+    // Assuming `ViewBag.approval` is provided in the Razor ViewBag
+    var approval = @Html.Raw(Json.Serialize(ViewBag.approval));
 
-        if (!approval ) {
-            // Iterate over all rows in the table
-            $("span.Approval").empty();
-        }
-        else{
-             $("span.Approval").show();
-        }
+    if (!approval ) {
+    // Iterate over all rows in the table
+    $("span.Approval").empty();
+    }
+    else{
+    $("span.Approval").show();
+    }
 
 
 
@@ -836,222 +845,226 @@
 
 
 
-        function updateApprovalButtons() {
-        // Iterate through rows in the dataTable
-        dataTable.forEach(function (row) {
-            var rowId = row.RowId; // Ensure this matches the JSON structure
-            var finalApprovalStatusKey = row.FinalApprovalStatusKey;
-            var approvalDesc = row.ApprovalDesc;
-            var reason = row.Reason;
+    function updateApprovalButtons() {
+    // Iterate through rows in the dataTable
+    dataTable.forEach(function (row) {
+    var rowId = row.RowId; // Ensure this matches the JSON structure
+    var finalApprovalStatusKey = row.FinalApprovalStatusKey;
+    var approvalDesc = row.ApprovalDesc;
+    var reason = row.Reason;
 
-            // Find all buttons with the class 'approvalbutton' (inside spans)
-            $('.approvaltable .approvalbutton').each(function () {
-                var button = $(this);
+    // Find all buttons with the class 'approvalbutton' (inside spans)
+    $('.approvaltable .approvalbutton').each(function () {
+    var button = $(this);
 
-                // Get the rowId from the button's onclick function
-                var onclickValue = button.attr('onclick');
-                var rowIdFromButton = onclickValue && onclickValue.match(/sendtoapproval\((\d+),/);
+    // Get the rowId from the button's onclick function
+    var onclickValue = button.attr('onclick');
+    var rowIdFromButton = onclickValue && onclickValue.match(/sendtoapproval\((\d+),/);
 
-                if (rowIdFromButton && rowIdFromButton[1] == rowId) {
-                    // Find the parent span of the button
-                    var approvalSpan = button.closest('.Approval');
+    if (rowIdFromButton && rowIdFromButton[1] == rowId) {
+    // Find the parent span of the button
+    var approvalSpan = button.closest('.Approval');
 
-                    if (approvalSpan.length) {
-                        // Find the parent <tr> element containing the approvalSpan
-                        var parentRow = approvalSpan.closest('tr');
+    if (approvalSpan.length) {
+    // Find the parent <tr> element containing the approvalSpan
+    var parentRow = approvalSpan.closest('tr');
 
-                        if (parentRow.length) {
-                            // Determine the badge color based on FinalApprovalStatusKey
-                            var badgeClass = 'bg-info'; // Default color
+    if (parentRow.length) {
+    // Determine the badge color based on FinalApprovalStatusKey
+    var badgeClass = 'bg-info'; // Default color
 
-                            switch (finalApprovalStatusKey) {
-                                case 1:
-                                    badgeClass = 'bg-success'; // Approved
-                                    break;
-                                case 2:
-                                    badgeClass = 'bg-danger'; // Rejected
-                                    break;
-                                case 3:
-                                    badgeClass = 'bg-warning'; // Partly Approved
-                                    break;
-                                case 4:
-                                    badgeClass = 'bg-primary'; // Initiated
-                                    break;
-                                default:
-                                    badgeClass = 'bg-secondary'; // Default color for unknown statuses
-                                    break;
-                            }
+    switch (finalApprovalStatusKey) {
+    case 1:
+    badgeClass = 'bg-success'; // Approved
+    break;
+    case 2:
+    badgeClass = 'bg-danger'; // Rejected
+    break;
+    case 3:
+    badgeClass = 'bg-warning'; // Partly Approved
+    break;
+    case 4:
+    badgeClass = 'bg-primary'; // Initiated
+    break;
+    default:
+    badgeClass = 'bg-secondary'; // Default color for unknown statuses
+    break;
+    }
 
-                            if (finalApprovalStatusKey == 1 || finalApprovalStatusKey == 2) {
-                                approvalSpan.show();
-                                approvalSpan.append(`<span class="badge ${badgeClass}">${approvalDesc}</span>`);
-                            } else {
-                                // Insert the approval description inside the badge
-                                approvalSpan.show();
-                                approvalSpan.html(`<span class="badge ${badgeClass}">${approvalDesc}</span>`);
+    if (finalApprovalStatusKey == 1 || finalApprovalStatusKey == 2) {
+    approvalSpan.show();
+    approvalSpan.append(`<span class="badge ${badgeClass}">${approvalDesc}</span>`);
+    } else {
+    // Insert the approval description inside the badge
+    approvalSpan.show();
+    approvalSpan.html(`<span class="badge ${badgeClass}">${approvalDesc}</span>`);
 
-                                // Find and empty the Edit and Delete spans within the parent <tr>
-                                parentRow.find('span.Edit').html(''); // Empty the Edit span
-                                parentRow.find('span.Delete').html(''); // Empty the Delete span
-                            }
+    // Find and empty the Edit and Delete spans within the parent <tr>
+    parentRow.find('span.Edit').html(''); // Empty the Edit span
+    parentRow.find('span.Delete').html(''); // Empty the Delete span
+    }
 
-                            // If the status is 'Rejected' (status key = 2), append an icon to open the modal
-                            if (finalApprovalStatusKey == 2) {
-                                var iconHtml = `<i class="fas fa-info-circle rejectreasonbtn" style="cursor:pointer;" data-row-id="${rowId}"></i>`;
-                                approvalSpan.append(iconHtml);
-                            }
-                        }
-                    }
-                }
-            });
-        });
+    // If the status is 'Rejected' (status key = 2), append an icon to open the modal
+    if (finalApprovalStatusKey == 2) {
+    var iconHtml = `<i class="fas fa-info-circle rejectreasonbtn" style="cursor:pointer;" data-row-id="${rowId}"></i>`;
+    approvalSpan.append(iconHtml);
+    }
+    }
+    }
+    }
+    });
+    });
     }
 
     // Update modal content when the reject reason icon is clicked
     $(document).ready(function() {
-        updateApprovalButtons();
+    updateApprovalButtons();
 
-        // Open the modal and update its content based on the clicked icon
-        $(document).on('click', '.rejectreasonbtn', function() {
-            var rowId = $(this).data('row-id');
-            var reason = dataTable.find(row => row.RowId === rowId).Reason;  // Get the reason based on rowId
+    // Open the modal and update its content based on the clicked icon
+    $(document).on('click', '.rejectreasonbtn', function() {
+    var rowId = $(this).data('row-id');
+    var reason = dataTable.find(row => row.RowId === rowId).Reason;  // Get the reason based on rowId
 
-            // Dynamically create and add the modal HTML to the page
-            var modalHtml = `
-                <div class="modal fade" id="reasonModal-${rowId}" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel-${rowId}" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="reasonModalLabel-${rowId}">Reason for Rejection</h5>
-                                <button type="button" class="close" data-dismiss="modal"  onclick="location.reload();" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>${reason}</p>
-                            </div>
-                            <div class="modal-footer">
-                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload();">Close</button>
+    // Dynamically create and add the modal HTML to the page
+    var modalHtml = `
+    <div class="modal fade" id="reasonModal-${rowId}" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel-${rowId}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="reasonModalLabel-${rowId}">Reason for Rejection</h5>
+    <button type="button" class="close" data-dismiss="modal"  onclick="location.reload();" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+    <p>${reason}</p>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload();">Close</button>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+    </div>
+    </div>
+    </div>
+    </div>
+    `;
 
-            // Append the modal HTML to the body
-            $('body').append(modalHtml);
+    // Append the modal HTML to the body
+    $('body').append(modalHtml);
 
-            // Show the modal
-            $(`#reasonModal-${rowId}`).modal('show');
+    // Show the modal
+    $(`#reasonModal-${rowId}`).modal('show');
 
-            // Remove the modal from DOM after it's closed to avoid duplicate modals
-            $(`#reasonModal-${rowId}`).on('hidden.bs.modal', function () {
-                $(this).remove();
-            });
-        });
+    // Remove the modal from DOM after it's closed to avoid duplicate modals
+    $(`#reasonModal-${rowId}`).on('hidden.bs.modal', function () {
+    $(this).remove();
+    });
+    });
     });
 
-        $(".AddButton").click(function() {
-        console.log("Button was clicked!");
-          $('#OperationalMode').val(2);
+    $(".AddButton").click(function() {
+    console.log("Button was clicked!");
+    $('#OperationalMode').val(2);
 
-          $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
-                                .done(function (response) {
-                                    console.log(key + ' updated successfully:', response);
-
-
+    $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
+    .done(function (response) {
+    console.log(key + ' updated successfully:', response);
 
 
 
 
-                                })
-                                .fail(function (xhr, status, error) {
-                                    console.error('Error updating ' + key + ':', error);
-                                });
+
+
+    })
+    .fail(function (xhr, status, error) {
+    console.error('Error updating ' + key + ':', error);
+    });
 
 
     });
     $(".EditButton").click(function() {
-        console.log("Button was clicked!");
-          $('#OperationalMode').val(3);
+    console.log("Button was clicked!");
+    $('#OperationalMode').val(3);
 
-          $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
-                                .done(function (response) {
-                                    console.log(key + ' updated successfully:', response);
-
-
+    $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
+    .done(function (response) {
+    console.log(key + ' updated successfully:', response);
 
 
 
 
-                                })
-                                .fail(function (xhr, status, error) {
-                                    console.error('Error updating ' + key + ':', error);
-                                });
+
+
+    })
+    .fail(function (xhr, status, error) {
+    console.error('Error updating ' + key + ':', error);
+    });
 
 
     });
     $(".DeleteButton").click(function() {
-        console.log("Button was clicked!");
-          $('#OperationalMode').val(3);
+    console.log("Button was clicked!");
+    $('#OperationalMode').val(3);
 
-          $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
-                                .done(function (response) {
-                                    console.log(key + ' updated successfully:', response);
-
-
+    $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
+    .done(function (response) {
+    console.log(key + ' updated successfully:', response);
 
 
 
 
-                                })
-                                .fail(function (xhr, status, error) {
-                                    console.error('Error updating ' + key + ':', error);
-                                });
+
+
+    })
+    .fail(function (xhr, status, error) {
+    console.error('Error updating ' + key + ':', error);
+    });
 
 
     });
     $(".ViewButton").click(function() {
-        console.log("Button was clicked!");
-          $('#OperationalMode').val(4);
+    console.log("Button was clicked!");
+    $('#OperationalMode').val(4);
 
-          $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
-                                .done(function (response) {
-                                    console.log(key + ' updated successfully:', response);
-
-
+    $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
+    .done(function (response) {
+    console.log(key + ' updated successfully:', response);
 
 
 
 
-                                })
-                                .fail(function (xhr, status, error) {
-                                    console.error('Error updating ' + key + ':', error);
-                                });
+
+
+    })
+    .fail(function (xhr, status, error) {
+    console.error('Error updating ' + key + ':', error);
+    });
 
 
     });
     $(".PrintButton").click(function() {
-        console.log("Button was clicked!");
-          $('#OperationalMode').val(4);
+    console.log("Button was clicked!");
+    $('#OperationalMode').val(4);
 
-          $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
-                                .done(function (response) {
-                                    console.log(key + ' updated successfully:', response);
-
-
+    $.post('/Home/SetAction', { key: 'OperationalMode', value: $('#OperationalMode').val() })
+    .done(function (response) {
+    console.log(key + ' updated successfully:', response);
 
 
 
 
-                                })
-                                .fail(function (xhr, status, error) {
-                                    console.error('Error updating ' + key + ':', error);
-                                });
+
+
+    })
+    .fail(function (xhr, status, error) {
+    console.error('Error updating ' + key + ':', error);
+    });
 
 
     });
 
 
+
+
+
 </script>
+

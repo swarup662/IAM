@@ -19,7 +19,7 @@ namespace IAM_UI.Controllers
         private readonly string _SessionName;
         private readonly string _LoginSessionName;
         private readonly IConfiguration _configuration;
-        private readonly ILoggerService _logger;
+
         private readonly string _baseUrlHome;
         private readonly ICommonService _commonService;
         private readonly string _ApiKey;
@@ -29,13 +29,13 @@ namespace IAM_UI.Controllers
         private readonly IGlobalModelService _globalModelService;
         private readonly string BaseUrlAllModule;
         private readonly string BaseUrl;
-        public HomeController(IConfiguration configuration, ICommonService commonService, ILoggerService logger, IMemoryCache memoryCache, IGlobalModelService globalModelService)
+        public HomeController(IConfiguration configuration, ICommonService commonService, IMemoryCache memoryCache, IGlobalModelService globalModelService)
         {
             _configuration = configuration;
             _baseUrlHome = configuration["BaseUrlHome"];
             _commonService = commonService;
             _ApiKey = configuration["Apikey"];
-            _logger = logger;
+   
             _LoginUrl = configuration["Data:LoginUrl"];
             _EncryptionKey = configuration["Data:Key"];
             _memoryCache = memoryCache;
@@ -59,17 +59,33 @@ namespace IAM_UI.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
         public IActionResult Unauthorized()
         {
             return View();
         }
 
+        public IActionResult Error(int? statusCode, string message = null)
+        {
+            int code = statusCode ?? 500; // Default to 500 if not provided
+            ViewBag.StatusCode = code;
+            ViewBag.ErrorMessage = message ?? "An unknown error occurred. Please contact support.";
+           
+           
+            return View();
 
-
+           
+        }
+        //[HttpGet]
+        //public IActionResult GetLastExceptionMessage()
+        //{
+        //    var message = GlobalExceptionFilter.GetLastExceptionMessage();
+            
+        //    return Json(new { message });
+        //}
 
         [HttpPost]
         public async Task<IActionResult> ReceiveData()

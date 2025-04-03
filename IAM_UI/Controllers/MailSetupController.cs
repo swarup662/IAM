@@ -53,6 +53,7 @@ namespace IAM_UI.Controllers
         {
             try
             {
+      
                 var UserData = JsonConvert.DeserializeObject<UserDetail>(HttpContext.Session.GetString("UserData"));
                 var model = new MailSetupModel();
 
@@ -87,7 +88,7 @@ namespace IAM_UI.Controllers
                         ViewBag.Applicationtb = await _commonService.GetSelectListAsync(dt.Tables["Applicationtb"], "ApplicationId", "ApplicationName", "--Select--", "");
 
 
-
+          
                         return View();
                     }
                     else
@@ -138,6 +139,7 @@ namespace IAM_UI.Controllers
 
         public async Task<IActionResult> EditMailSetup(int id)
         {
+
             var UserData = JsonConvert.DeserializeObject<UserDetail>(HttpContext.Session.GetString("UserData"));
             var model = new MailSetupModel
             {
@@ -172,59 +174,62 @@ namespace IAM_UI.Controllers
         [HttpPost]
         public async Task<ActionResult> SaveMailSetup([FromBody] MailSetupModel model)
         {
-            try
-            {
+         try {
+      
                 var UserData = JsonConvert.DeserializeObject<UserDetail>(HttpContext.Session.GetString("UserData"));
 
-                model.IsCC = 0; //no cc for any mail
-                model.TimeSlotMinute = 60; //fixed
-                model.Tenant_ID = UserData.TenantId;
-                model.Created_By = UserData.User_Master_Key;
+            model.IsCC = 0; //no cc for any mail
+            model.TimeSlotMinute = 60; //fixed
+            model.Tenant_ID = UserData.TenantId;
+            model.Created_By = UserData.User_Master_Key;
 
 
-                string urlParameters = "SaveMailSetup/";
-                string jsonBody = JsonConvert.SerializeObject(model);
+            string urlParameters = "SaveMailSetup/";
+            string jsonBody = JsonConvert.SerializeObject(model);
 
-                using (var content = new StringContent(jsonBody, Encoding.UTF8, "application/json"))
+            using (var content = new StringContent(jsonBody, Encoding.UTF8, "application/json"))
+            {
+                string url = _baseUrlMail + urlParameters;
+
+                using (var httpClient = new HttpClient())
                 {
-                    string url = _baseUrlMail + urlParameters;
+                    httpClient.DefaultRequestHeaders.Add("X-Api-Key", _ApiKey.Trim('{', '}'));
+                    HttpResponseMessage response = await httpClient.PostAsync(url, content);
 
-                    using (var httpClient = new HttpClient())
+                    if (response.IsSuccessStatusCode)
                     {
-                        httpClient.DefaultRequestHeaders.Add("X-Api-Key", _ApiKey.Trim('{', '}'));
-                        HttpResponseMessage response = await httpClient.PostAsync(url, content);
+                        var responsedata = await response.Content.ReadAsStringAsync();
 
-                        if (response.IsSuccessStatusCode)
+                        if (int.TryParse(responsedata, out int r))
                         {
-                            var responsedata = await response.Content.ReadAsStringAsync();
-
-                            if (int.TryParse(responsedata, out int r))
-                            {
 
 
-                                if (r > 0)
-                                    return Json(new { status = "success" });
-                                else if (r == -1)
-                                    return Json(new { status = "exist" });
-                                else
-                                    return Json(new { status = "fail" });
-                            }
+                            if (r > 0)
+                                return Json(new { status = "success" });
+                            else if (r == -1)
+                                return Json(new { status = "exist" });
                             else
-                            {
-                                return Json(new { status = "error", message = "Invalid response from server." });
-                            }
+                                return Json(new { status = "fail" });
                         }
                         else
                         {
-                            return Json(new { status = "Invalid" });
+                            return Json(new { status = "error", message = "Invalid response from server." });
                         }
+                    }
+                    else
+                    {
+                        return Json(new { status = "Invalid" });
                     }
                 }
             }
+
+
+             }
             catch (Exception ex)
             {
-                return Json(new { status = "error", message = ex.Message });
+                throw ex;
             }
+
         }
 
 

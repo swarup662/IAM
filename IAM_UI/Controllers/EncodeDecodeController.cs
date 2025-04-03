@@ -8,7 +8,7 @@ namespace IAM_UI.Controllers
     {
 
         private readonly IConfiguration _configuration;
-        private readonly ILoggerService _logger;
+      
         private readonly string _baseUrlGlobal;
         private readonly ICommonService _commonService;
         private readonly string _ApiKey;
@@ -23,14 +23,14 @@ namespace IAM_UI.Controllers
         private readonly IEncryptDecrypt _encodedecode;
 
 
-        public EncodeDecodeController(IConfiguration configuration, ICommonService commonService, ILoggerService logger, IGlobalModelService globalModelService, APIResultsValue apirelultvalues, IEncryptDecrypt encodedecode)
+        public EncodeDecodeController(IConfiguration configuration, ICommonService commonService, IGlobalModelService globalModelService, APIResultsValue apirelultvalues, IEncryptDecrypt encodedecode)
         {
             _configuration = configuration;
             _baseUrlGlobal = configuration["BaseUrlGlobal"];
             _commonService = commonService;
             _ApiKey = configuration["Apikey"];
             _MailBody = configuration["MailBody"];
-            _logger = logger;
+        
             BaseUrlAuth = configuration["BaseUrlAuth"];
 
             BaseUrlOldPassword = configuration["BaseUrlLogin"];

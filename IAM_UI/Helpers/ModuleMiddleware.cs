@@ -26,7 +26,9 @@ namespace IAM_UI.Helpers
 
         public async Task Invoke(HttpContext context)
         {
-            var path = context.Request.Path.Value;
+            try
+            {
+                var path = context.Request.Path.Value;
 
             if (!string.IsNullOrEmpty(path))
             {
@@ -89,7 +91,7 @@ namespace IAM_UI.Helpers
                                                 context.Items["Actions"] = new List<string[]> { new[] { "Approve", "View", "Edit" } };
                                                 context.Items["ModuleId"] = approvalTag;
                                             }
-                                            else if(controller == "EncodeDecode")
+                                            else if (controller == "EncodeDecode")
                                             {
                                                 context.Items["Actions"] = new List<string[]> { new[] { "Approve", "View" } };
                                                 context.Items["ModuleId"] = approvalTag;
@@ -113,7 +115,6 @@ namespace IAM_UI.Helpers
                                             context.Items["Actions"] = routes.Select(route => route.Actions).ToList();
                                             context.Items["ModuleId"] = routes.FirstOrDefault()?.ModuleId.ToString();
                                         }
-
 
 
 
@@ -205,6 +206,14 @@ namespace IAM_UI.Helpers
             }
 
             await _next(context);
+
+            }
+            catch (Exception ex)
+            {
+
+                // Redirect to Error page with status code 500
+                context.Response.Redirect($"/Home/Error?statusCode=500&message={Uri.EscapeDataString(ex.Message)}");
+            }
         }
     }
 

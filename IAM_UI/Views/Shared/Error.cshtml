@@ -1,25 +1,75 @@
-﻿@model ErrorViewModel
-@{
+﻿@{
     ViewData["Title"] = "Error";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<style>
+    body {
+    background: #f8f9fa;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    }
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
+    .error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    }
+
+    .error-code {
+    font-size: 90px;
+    font-weight: bold;
+    color: #dc3545;
+    text-shadow: 4px 4px 8px rgba(220, 53, 69, 0.3);
+    }
+
+    .error-message {
+    font-size: 20px;
+    color: #555;
+    max-width: 500px;
+    }
+
+    .btn-custom {
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: white;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    }
+
+    .btn-custom:hover {
+    background: linear-gradient(135deg, #ee0979, #ff6a00);
+    color: white;
+    text-decoration: none;
+    }
+</style>
+@{
+    int StatusCode = ViewBag.StatusCode != null ? Convert.ToInt32(ViewBag.StatusCode) : 500;
+    ViewBag.StatusCode = StatusCode;
+
+    string ErrorMessage = ViewBag.ErrorMessage as string;
+    if (string.IsNullOrEmpty(ErrorMessage))
+    {
+        ViewBag.ErrorMessage = "An unknown error occurred. Please contact admin.";
+    }
+
 }
+<div class="error-container">
+    <div class="error-code">@ViewBag.StatusCode </div>
+    <div class="error-message">
+        <p>@ViewBag.ErrorMessage </p>
+    </div>
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+    <a href="/Home/Dashboard" class="btn btn-custom mt-4">
+        <i class="fas fa-arrow-left"></i> Go Back to Dashboard
+    </a>
+</div>
+
+<!-- FontAwesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

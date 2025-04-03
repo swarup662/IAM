@@ -29,7 +29,7 @@ namespace IAM_UI.Controllers
     public class ItController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ILoggerService _logger;
+  
         private readonly string _baseUrlGlobal;
         private readonly ICommonService _commonService;
         private readonly string _ApiKey;
@@ -42,14 +42,14 @@ namespace IAM_UI.Controllers
         private readonly APIResultsValue _apirelultvalues;
         private readonly string BaseUrlAllModule;
 
-        public ItController(IConfiguration configuration, ICommonService commonService, ILoggerService logger, IGlobalModelService globalModelService, APIResultsValue apirelultvalues)
+        public ItController(IConfiguration configuration, ICommonService commonService, IGlobalModelService globalModelService, APIResultsValue apirelultvalues)
         {
             _configuration = configuration;
             _baseUrlGlobal = configuration["BaseUrlGlobal"];
             _commonService = commonService;
             _ApiKey = configuration["Apikey"];
             _MailBody = configuration["MailBody"];
-            _logger = logger;
+      
             BaseUrlAuth = configuration["BaseUrlAuth"];
             BaseUrlPers = configuration["BaseUrlPersonnel"];
 

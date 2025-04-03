@@ -139,7 +139,7 @@ namespace GlobalAppAPI.Controllers.V1
                 }
                 return lst;
 
-
+             
             }
             catch (Exception ex)
             {

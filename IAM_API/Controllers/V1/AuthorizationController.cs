@@ -742,7 +742,8 @@ namespace IAM_API.Controllers.V1
                             CurrentAddress = row["CurrentAddress"]?.ToString() ?? string.Empty,
                             PermanentAddress = row["PermanentAddress"]?.ToString() ?? string.Empty,
                             Aadhar_no = row["Aadhar_no"]?.ToString() ?? string.Empty,
-                            DOB = row["DOB"] as DateTime? ?? default,
+                            DOB = row["DOB"] is DBNull ? default : DateOnly.FromDateTime((DateTime)row["DOB"]),
+
                             CreatedDate = row["CreatedDate"] as DateTime? ?? default,
                             IsAcceptedTerms = row["IsAcceptedTerms"] as int? ?? default
                         };
@@ -957,7 +958,8 @@ namespace IAM_API.Controllers.V1
                             CurrentAddress = row["CurrentAddress"]?.ToString() ?? string.Empty,
                             PermanentAddress = row["PermanentAddress"]?.ToString() ?? string.Empty,
                             Aadhar_no = row["Aadhar_no"]?.ToString() ?? string.Empty,
-                            DOB = row["DOB"] as DateTime? ?? default,
+                            DOB = row["DOB"] is DBNull ? default : DateOnly.FromDateTime((DateTime)row["DOB"]),
+
                             CreatedDate = row["CreatedDate"] as DateTime? ?? default,
                             IsAcceptedTerms = row["IsAcceptedTerms"] as int? ?? default,
                               User_Unique_ID  = row["User_Unique_ID"]?.ToString() ?? string.Empty

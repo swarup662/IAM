@@ -818,7 +818,7 @@ namespace IAM_UI.Controllers
         public async Task<JsonResult> SaveLabelOne([FromBody]UserCreationViewModel model)
         {
             try
-            {
+                {
                 GlobalModel gm = _globalModelService.InitializeGlobalModel(HttpContext);
                 model.CreatedBy = gm.userID;
                 model.TenantId = gm.TenantID;

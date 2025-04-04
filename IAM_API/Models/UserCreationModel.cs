@@ -101,7 +101,7 @@
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public string? FullName { get; set; }
-        public DateTime DOB { get; set; }
+        public DateOnly DOB { get; set; }
         public string? Mobile_No { get; set; }
         public string? Email_ID { get; set; }
         public int? EmailTypeId { get; set; }

@@ -183,11 +183,11 @@
 
                                                     <a href="javascript:;" class="action-icon"><i class="mdi mdi-email-send" onclick="EmailSend(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Send Email" style="color:orange"></i></a>
                                                     <span class="Edit" style="display:none">
-                                                        <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-square-edit-outline" onclick="EditItem(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Edit" style="color:forestgreen"></i></a>
+                                                        <a href="javascript:;" class="action-icon "><i class="mdi mdi-square-edit-outline" onclick="EditItemUC(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="Edit" style="color:forestgreen"></i></a>
                                                     </span>
 
                                                     <span class="View" style="display:none">
-                                                        <a href="javascript:;" class="action-icon EditButton"><i class="mdi mdi-eye-circle-outline" onclick="EditItem(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="View" style="color:forestgreen"></i></a>
+                                                        <a href="javascript:;" class="action-icon "><i class="mdi mdi-eye-circle-outline" onclick="ViewItemUC(@AC.USER_MASTER_KEY)" data-toggle="tooltip" title="View" style="color:forestgreen"></i></a>
                                                     </span>
                                                     @if (AC.AuthBlock != 1)
                                                     {
@@ -367,9 +367,9 @@
 
 
 <script>
+ @*     $.post('/Authorization/SetViewDataAction'--> this url is for  edit and view button. This is for remove some button *@
 
-
-    function EditItem(EMPLOYEE_MASTER_KEY) {
+    function EditItemUC(EMPLOYEE_MASTER_KEY) {
         //Common function for handling post requests for Edit and View
            function handlePostRequest(actionKey, actionValue) {
                 $.post('/Authorization/SetViewDataAction', { key: actionKey, value: actionValue })
@@ -387,19 +387,54 @@
                     });
             }
 
-            // Set up the event listeners for View, Edit, and Add actions
-            $(".View i").click(function () {
-                handlePostRequest('ViewClicked', 'View');
-            });
+           
 
-            $(".Edit i").click(function () {
+           
                 handlePostRequest('ViewClicked', 'Edit');
-            });
+            
 
 
 
 
     }
+
+
+
+
+
+    function ViewItemUC(EMPLOYEE_MASTER_KEY) {
+        //Common function for handling post requests for Edit and View
+           function handlePostRequest(actionKey, actionValue) {
+                $.post('/Authorization/SetViewDataAction', { key: actionKey, value: actionValue })
+                    .done(function (response) {
+                        console.log(actionKey + ' updated successfully:', response);
+
+
+
+                    window.location.href = "/Authorization/UserCreationView?" + encodeURIComponent("id=" + EMPLOYEE_MASTER_KEY);
+
+
+                    })
+                    .fail(function (xhr, status, error) {
+                        console.error('Error updating ' + actionKey + ':', error);
+                    });
+            }
+
+            
+                handlePostRequest('ViewClicked', 'View');
+          
+
+          
+
+
+
+
+    }
+
+
+
+
+
 
 
             $(".Add button").click(function () {
